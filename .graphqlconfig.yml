@@ -1,0 +1,15 @@
+projects:
+  ColonyNotifications:
+    schemaPath: amplify/backend/api/ColonyNotifications/build/schema.graphql
+    includes:
+      - src/graphql/**/*.ts
+    excludes:
+      - ./amplify/**
+    extensions:
+      amplify:
+        codeGenTarget: typescript
+        generatedFileName: src/API.ts
+        docsFilePath: src/graphql
+        region: eu-west-3
+        apiId: null
+        maxDepth: 10
