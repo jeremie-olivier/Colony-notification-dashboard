@@ -5,6 +5,8 @@ export const Navbar = () => {
   return (
     <div className="bg-sky-900 text-white">
        <Link to="/adminPage">Admin Dashboard</Link>
+       <br />
+       <Link to="/UserPage">UserPage</Link>
     </div>
   )
 }
