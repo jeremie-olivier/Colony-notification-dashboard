@@ -1,23 +1,29 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
-import { Navbar } from "./components/Navbar";
-import { Home } from "./pages/Home";
-import { AdminPage } from "./pages/AdminPage";
 import '@aws-amplify/ui-react/styles.css';
-
-
 import { AmplifyProvider } from "@aws-amplify/ui-react";
-import { UserPage } from "./pages/UserPage";
+
+import { AdminPage } from "./pages/Admin/AdminPage";
+import { UserPage } from "./pages/User/UserPage";
+import { LoginDiscord } from "./pages/LoginDiscord";
+import { DiscordAuth } from "./pages/Login/DiscordAuth";
+import { CreatingPost } from "./pages/General/CreatingPost";
+import { EditingPost } from "./pages/General/EditingPost";
+import { LoggedIn } from "./pages/Login/LoggedIn";
+
 
 function App() {
   return (
     <AmplifyProvider>
       <div>
-        <Navbar />
         <Routes>
-          <Route path="/" element={<Home />} />;
+          <Route path="/" element={<LoginDiscord />} />;
+          <Route path="/discordAuth" element={<DiscordAuth />} />;
           <Route path="/adminPage" element={<AdminPage />} />;
           <Route path="/userPage" element={<UserPage />} />;
+          <Route path="/creatingPost" element={<CreatingPost />} />;
+          <Route path="/editingPost" element={<EditingPost  />} />;
+          <Route path="/loggedIn" element={<LoggedIn />} />;
         </Routes>
       </div>
     </AmplifyProvider>

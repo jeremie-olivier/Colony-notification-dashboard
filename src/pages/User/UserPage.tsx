@@ -1,7 +1,7 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
-import { getNotificationSubscription } from '../api/getNotificationSubscription'
-import { NotificationSubscription } from  '../API'
+import { getNotificationSubscription } from '../../api/getNotificationSubscription'
+import { NotificationSubscription } from  '../../API'
 
 
 
