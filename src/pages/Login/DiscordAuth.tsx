@@ -10,7 +10,7 @@ export const DiscordAuth = () => {
     <div className='flex justify-center'>
        <Link to="/LoggedIn">
           <button className="rounded-md bg-[#5765F2] text-white p-3 m-8">
-            I am logged IN !
+            Authorize
           </button>
         </Link>
     </div>
