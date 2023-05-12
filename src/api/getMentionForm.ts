@@ -6,12 +6,16 @@ export async function getMentionForm(colonyName: string) {
 
   const response = await API.graphql<GraphQLQuery<any>>({
     query: `query Query {
-        listMentions {
-          items {
+      listMentions {
+        items {
+          id
+          idDiscordRole
+          user {
             id
           }
         }
-      }`,
+      }
+    }`,
   });
 
   return response.data.listMentions.items[0]

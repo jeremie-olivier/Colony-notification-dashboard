@@ -22,9 +22,9 @@ export const DomainForm = () => {
       <div className="mb-2">
         <label htmlFor="select2">Teams</label>
       </div>
-      <div className="form-group border-2 border-gray-400 rounded-md p-2">
+      <div className="flex flex-row form-group border-2 border-gray-400 rounded-md p-2">
         <select value={id} onChange={onChange} className="form-control">
-          <option value="" disabled selected>
+          <option value=""  disabled selected>
             Choose a team
           </option>
           {getDomain.map((domain: any) => (
@@ -33,6 +33,8 @@ export const DomainForm = () => {
             </option>
           ))}
         </select>
+
+    
       </div>
     </div>
   );
