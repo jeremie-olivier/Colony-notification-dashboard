@@ -1,20 +1,25 @@
-import { ChangeEvent, useState, useEffect } from "react";
+import { ChangeEvent, useState, useEffect, Dispatch, SetStateAction } from "react";
 import { getMentionForm } from "../api/getMentionForm";
 
-export const MentionForm = () => {
-  const [getDomain, setGetDomain] = useState<any[]>([]);
-  const [id, setId] = useState<string>("");
+interface MentionFormProps {
+  selectedOption: string;
+  setSelectedOption: Dispatch<SetStateAction<string>>;
+}
+
+export const MentionForm = ({ selectedOption, setSelectedOption }: MentionFormProps) => {
+  const [getMention, setGetMention] = useState<any[]>([]);
+
 
   useEffect(() => {
     async function fetchgetDomain() {
       const response = await getMentionForm("notificationstest");
-      setGetDomain(response);
+      setGetMention(response);
     }
     fetchgetDomain();
   }, []);
 
   const onChange = (e: ChangeEvent<HTMLSelectElement>) => {
-    setId(e.target.value);
+    setSelectedOption(e.target.value);
   };
 
   return (
@@ -23,13 +28,13 @@ export const MentionForm = () => {
         <label htmlFor="select2">Mentions </label>
       </div>
       <div className="form-group border-2 border-gray-400 rounded-md p-2">
-        <select value={id} onChange={onChange} className="form-control">
-          <option value="" disabled selected>
+        <select value={selectedOption} onChange={onChange} className="form-control">
+          <option value="" defaultValue="true">
             Select a mention
           </option>
-          {getDomain.map((domain: any) => (
-            <option value={domain.id} key={domain.id}>
-              {domain.name}
+          {getMention.map((mention: any) => (
+            <option value={mention.id} key={mention.id}>
+              {mention.id}
             </option>
           ))}
         </select>

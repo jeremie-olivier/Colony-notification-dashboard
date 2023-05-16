@@ -2,7 +2,7 @@ import { API } from "aws-amplify";
 import { GraphQLQuery } from "@aws-amplify/api";
 
 export async function getNotificationSubscription(colonyName: string) {
-  // Fetch a single record by its identifier
+
 
   const response = await API.graphql<GraphQLQuery<any>>({
     query: `query($filter: ModelColonyFilterInput) {

@@ -1,20 +1,26 @@
-import { ChangeEvent, useState, useEffect } from "react";
+import { ChangeEvent, useState, useEffect, Dispatch, SetStateAction } from "react";
 import { getDiscordChannelForm } from '../api/getDiscordChannelForm'
 
-export const DiscordChannelForm = () => {
-  const [getDomain, setGetDomain] = useState<any[]>([]);
-  const [id, setId] = useState<string>("");
+interface DiscordChannelFormProps {
+  selectedOption: string;
+  setSelectedOption: Dispatch<SetStateAction<string>>;
+}
+
+
+export const DiscordChannelForm = ({ selectedOption, setSelectedOption }: DiscordChannelFormProps) => {
+  const [getDiscordChannel, setGetDiscordChannel] = useState<any[]>([]);
+
 
   useEffect(() => {
     async function fetchgetDomain() {
       const response = await getDiscordChannelForm("notificationstest");
-      setGetDomain(response);
+      setGetDiscordChannel(response);
     }
     fetchgetDomain();
   }, []);
 
   const onChange = (e: ChangeEvent<HTMLSelectElement>) => {
-    setId(e.target.value);
+    setSelectedOption(e.target.value);
   };
 
   return (
@@ -23,13 +29,13 @@ export const DiscordChannelForm = () => {
         <label htmlFor="select2">Discord Channel </label>
       </div>
       <div className="form-group border-2 border-gray-400 rounded-md p-2">
-        <select value={id} onChange={onChange} className="form-control">
-          <option value="" disabled selected>
+        <select value={selectedOption} onChange={onChange} className="form-control">
+          <option value="" defaultValue="true">
             Select a Discord Channel
           </option>
-          {getDomain.map((domain: any) => (
-            <option value={domain.id} key={domain.id}>
-              {domain.name}
+          {getDiscordChannel.map((discordChannel: any) => (
+            <option value={discordChannel.id} key={discordChannel.id}>
+              {discordChannel.name}
             </option>
           ))}
         </select>

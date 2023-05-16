@@ -9,6 +9,7 @@ export async function getDiscordChannelForm(colonyName: string) {
         listDiscordChannels {
           items {
             name
+            id
           }
         }
       }`,

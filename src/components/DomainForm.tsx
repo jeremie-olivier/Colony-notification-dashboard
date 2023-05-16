@@ -1,9 +1,14 @@
-import { ChangeEvent, useState, useEffect } from "react";
+import { ChangeEvent, useState, useEffect, Dispatch, SetStateAction } from "react";
 import { getDomainForm } from "../api/getDomainForm";
 
-export const DomainForm = () => {
+interface DomainFormProps {
+  selectedOption: string;
+  setSelectedOption: Dispatch<SetStateAction<string>>;
+}
+
+export const DomainForm = ({ selectedOption, setSelectedOption }: DomainFormProps) => {
   const [getDomain, setGetDomain] = useState<any[]>([]);
-  const [id, setId] = useState<string>("");
+
 
   useEffect(() => {
     async function fetchgetDomain() {
@@ -14,7 +19,7 @@ export const DomainForm = () => {
   }, []);
 
   const onChange = (e: ChangeEvent<HTMLSelectElement>) => {
-    setId(e.target.value);
+    setSelectedOption(e.target.value);
   };
 
   return (
@@ -23,8 +28,8 @@ export const DomainForm = () => {
         <label htmlFor="select2">Teams</label>
       </div>
       <div className="flex flex-row form-group border-2 border-gray-400 rounded-md p-2">
-        <select value={id} onChange={onChange} className="form-control">
-          <option value=""  disabled selected>
+        <select value={selectedOption} onChange={onChange} className="form-control">
+          <option value=""  defaultValue="true">
             Choose a team
           </option>
           {getDomain.map((domain: any) => (

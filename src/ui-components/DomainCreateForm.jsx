@@ -129,7 +129,13 @@ export default function DomainCreateForm(props) {
         errorMessage={errors.name?.errorMessage}
         hasError={errors.name?.hasError}
         {...getOverrideProps(overrides, "name")}
-      ></SelectField>
+      >
+        <option
+          children="notificationtest"
+          value="notificationtest"
+          {...getOverrideProps(overrides, "nameoption0")}
+        ></option>
+      </SelectField>
       <Flex
         justifyContent="space-between"
         {...getOverrideProps(overrides, "CTAFlex")}
