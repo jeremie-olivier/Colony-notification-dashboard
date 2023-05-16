@@ -11,6 +11,7 @@ export async function getNotificationSubscription(colonyName: string) {
           notificationSubscriptions {
             items {
               id
+              _version
               domain {
                 name
               }

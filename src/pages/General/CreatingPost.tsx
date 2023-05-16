@@ -5,18 +5,21 @@ import { DomainForm } from "../../components/DomainForm";
 import { DiscordChannelForm } from "../../components/DiscordChannelForm";
 import { MentionForm } from "../../components/MentionForm";
 import { createNotificationSubscriptionInput } from "../../api/createNotificationSubs";
+import { ColonyEventTypeForm } from "../../components/ColonyEventTypeForm";
 
 export const CreatingPost = () => {
   const [domainOption, setDomainOption] = useState("");
   const [discordChannelOption, setDiscordChannelOption] = useState("");
   const [mentionOption, setMentionOption] = useState("");
+  const [colonyEventTypeOption, setColonyEventTypeOption] = useState("");
 
   const handleSaveButtonClick = async () => {
     try {
       await createNotificationSubscriptionInput(
         domainOption,
         discordChannelOption,
-        mentionOption
+        mentionOption,
+        colonyEventTypeOption
       );
     } catch (error) {
       console.error(error);
@@ -46,9 +49,10 @@ export const CreatingPost = () => {
               setSelectedOption={setMentionOption}
             />
           </div>
-          {/* <div className="">
-            <ColonyEventTypeCreateForm />
-          </div> */}
+            <ColonyEventTypeForm
+              selectedOption={colonyEventTypeOption}
+              setSelectedOption={setColonyEventTypeOption}
+            />
           <button
             className="mt-10 bg-black text-white"
             onClick={handleSaveButtonClick}
