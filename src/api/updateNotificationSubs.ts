@@ -3,7 +3,7 @@ import { updateNotificationSubscription } from '../graphql/mutations';
 
 
 
-export async function updateNotificationSubscriptionInput(notificationSubscriptionId:any, domainOption: any, discordChannelOption: any, colonyEventTypeOption: any) {
+export async function updateNotificationSubscriptionInput(notificationSubscriptionId:any, domainOption: any, discordChannelOption: any, colonyEventTypeOption: any, colonyOption: any) {
   try {
     const response = await API.graphql(graphqlOperation(updateNotificationSubscription, {
       input: {
@@ -12,7 +12,7 @@ export async function updateNotificationSubscriptionInput(notificationSubscripti
         discordChannelId : discordChannelOption,
         authorId: "b9dc0eab-e920-4118-91d1-c9a349dd8299",
         colonyEventTypeId: colonyEventTypeOption,
-        colonyId: "c7ab5019-9f19-4e97-a67d-edd99a90f978",
+        colonyId: colonyOption,
         _version : 1
       },
     }));
