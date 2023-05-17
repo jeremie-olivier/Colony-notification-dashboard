@@ -1,25 +1,28 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import { ProfileBar } from "../../components/ProfileBar";
 import { DomainForm } from "../../components/DomainForm";
 import { DiscordChannelForm } from "../../components/DiscordChannelForm";
-import { MentionForm } from "../../components/MentionForm";
 import { ColonyEventTypeForm } from "../../components/ColonyEventTypeForm";
 import { updateNotificationSubscriptionInput } from "../../api/updateNotificationSubs";
+import { Link, useParams } from "react-router-dom";
+
 
 
 export const EditingPost = () => {
+  const { notificationSubscriptionId } = useParams();
   const [domainOption, setDomainOption] = useState("");
   const [discordChannelOption, setDiscordChannelOption] = useState("");
-  const [mentionOption, setMentionOption] = useState("");
   const [colonyEventTypeOption, setColonyEventTypeOption] = useState("");
+
+
 
   const handleUpdateButtonClick = async () => {
     try {
       await updateNotificationSubscriptionInput(
+        notificationSubscriptionId,
         domainOption,
         discordChannelOption,
-        mentionOption,
         colonyEventTypeOption
       );
     } catch (error) {
@@ -44,19 +47,20 @@ export const EditingPost = () => {
               setSelectedOption={setDiscordChannelOption}
             />
           </div>
-          <div className="">
-            <MentionForm
-              selectedOption={mentionOption}
-              setSelectedOption={setMentionOption}
-            />
-          </div>
           <div>
             <ColonyEventTypeForm
               selectedOption={colonyEventTypeOption}
               setSelectedOption={setColonyEventTypeOption}
             />
           </div>
-          <button>Update</button>
+          {/* <Link to="/AdminPage"> */}
+            <button
+              className="mt-10 bg-black text-white"
+              onClick={handleUpdateButtonClick}
+            >
+              Update
+            </button>
+          {/* </Link> */}
         </div>
       </div>
     </section>

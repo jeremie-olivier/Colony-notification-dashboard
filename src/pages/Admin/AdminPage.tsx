@@ -7,6 +7,7 @@ import { deleteNotificationSubscription as deleteNotification } from "../../grap
 
 import { ProfileBar } from "../../components/ProfileBar";
 import { API, graphqlOperation } from "aws-amplify";
+//import { updateNotificationSubscriptionInput } from "../../api/updateNotificationSubs";
 
 export const AdminPage = ({ colonyName = "notificationstest" }) => {
   const [notificationSubscriptions, setNotificationSubscriptions] = useState<
@@ -32,9 +33,10 @@ export const AdminPage = ({ colonyName = "notificationstest" }) => {
       const input = { id: notification.id, _version: notification._version };
       await API.graphql(graphqlOperation(deleteNotification, { input }));
 
-      const updatedSubscriptions = await getNotificationSubscription("notificationstest");
+      const updatedSubscriptions = await getNotificationSubscription(
+        "notificationstest"
+      );
       setNotificationSubscriptions(updatedSubscriptions);
-      
     } catch (error) {
       console.error(
         "Erreur lors de la suppression de la notification :",
@@ -44,6 +46,7 @@ export const AdminPage = ({ colonyName = "notificationstest" }) => {
       throw error;
     }
   };
+
 
   return (
     <section>
@@ -138,8 +141,11 @@ export const AdminPage = ({ colonyName = "notificationstest" }) => {
                       {notificationSubscription.hits?.items.length}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap flex space-x-3">
-                      <Link to="/EditingPost">
-                        <button className="rounded-md bg-[#5765F2] text-white p-2">
+                      <Link to={`/EditingPost/${notificationSubscription.id}`}>
+                        <button
+                          className="rounded-md bg-[#5765F2] text-white p-2"
+                  
+                        >
                           Edit
                         </button>
                       </Link>

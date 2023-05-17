@@ -22,7 +22,7 @@ function App() {
           <Route path="/adminPage" element={<AdminPage />} />;
           <Route path="/userPage" element={<UserPage />} />;
           <Route path="/creatingPost" element={<CreatingPost />} />;
-          <Route path="/editingPost" element={<EditingPost  />} />;
+          <Route path="/editingPost/:notificationSubscriptionId" element={<EditingPost  />} />;
           <Route path="/loggedIn" element={<LoggedIn />} />;
         </Routes>
       </div>
