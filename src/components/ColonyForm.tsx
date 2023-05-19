@@ -1,13 +1,22 @@
-import { useState, useEffect, ChangeEvent, Dispatch, SetStateAction } from "react";
+import {
+  useState,
+  useEffect,
+  ChangeEvent,
+  Dispatch,
+  SetStateAction,
+} from "react";
 import { Colony } from "../API";
 import { getColonyName } from "../api/getColonyName";
 
 interface ColonyFormProps {
-    selectedOption: string;
-    setSelectedOption: Dispatch<SetStateAction<string>>;
-  }
+  selectedOption: string;
+  setSelectedOption: Dispatch<SetStateAction<string>>;
+}
 
-export const ColonyForm = ({ selectedOption, setSelectedOption }: ColonyFormProps) =>{
+export const ColonyForm = ({
+  selectedOption,
+  setSelectedOption,
+}: ColonyFormProps) => {
   const [listcolonyNames, setListColonyNames] = useState<Colony[]>([]);
 
   useEffect(() => {
@@ -28,7 +37,11 @@ export const ColonyForm = ({ selectedOption, setSelectedOption }: ColonyFormProp
         <label htmlFor="select2">Colony's Name</label>
       </div>
       <div className="form-group border-2 border-gray-400 rounded-md p-2">
-        <select value={selectedOption} onChange={onChange} className="form-control">
+        <select
+          value={selectedOption}
+          onChange={onChange}
+          className="form-control"
+        >
           <option value="" defaultValue="true">
             Select a Colony
           </option>

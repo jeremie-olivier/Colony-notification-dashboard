@@ -2,8 +2,6 @@ import { API } from "aws-amplify";
 import { GraphQLQuery } from "@aws-amplify/api";
 
 export async function getNotificationSubscription(colonyName: string) {
-
-
   const response = await API.graphql<GraphQLQuery<any>>({
     query: `query($filter: ModelColonyFilterInput) {
       listColonies(filter: $filter) {
@@ -11,12 +9,16 @@ export async function getNotificationSubscription(colonyName: string) {
           notificationSubscriptions {
             items {
               id
+              _deleted
               _version
               domain {
                 name
               }
               colonyEventType {
                 type
+              }
+              colony {
+                name
               }
               discordChannel {
                 name
@@ -46,15 +48,15 @@ export async function getNotificationSubscription(colonyName: string) {
       }
     }`,
     variables: {
-        filter: {
-          name: {
-            eq: colonyName,
-          }
-        }
-    }
+      filter: {
+        name: {
+          eq: colonyName,
+        },
+      },
+    },
   });
 
-  return response.data.listColonies.items[0] ? 
-   response.data.listColonies.items[0].notificationSubscriptions.items : [];
+  return response.data.listColonies.items[0]
+    ? response.data.listColonies.items[0].notificationSubscriptions.items
+    : [];
 }
- 

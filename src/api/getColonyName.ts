@@ -8,6 +8,7 @@ export async function getColonyName(colonyName: string) {
     query: `query {
         listColonies {
           items {
+            id
             name
           }
         }
@@ -15,5 +16,6 @@ export async function getColonyName(colonyName: string) {
   });
 
   return response.data.listColonies.items[0]
-    ? response.data.listColonies.items: [];
+    ? response.data.listColonies.items
+    : [];
 }

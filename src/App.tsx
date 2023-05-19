@@ -1,6 +1,6 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
-import '@aws-amplify/ui-react/styles.css';
+import "@aws-amplify/ui-react/styles.css";
 import { AmplifyProvider } from "@aws-amplify/ui-react";
 
 import { AdminPage } from "./pages/Admin/AdminPage";
@@ -11,7 +11,6 @@ import { CreatingPost } from "./pages/General/CreatingPost";
 import { EditingPost } from "./pages/General/EditingPost";
 import { LoggedIn } from "./pages/Login/LoggedIn";
 
-
 function App() {
   return (
     <AmplifyProvider>
@@ -19,10 +18,13 @@ function App() {
         <Routes>
           <Route path="/" element={<LoginDiscord />} />;
           <Route path="/discordAuth" element={<DiscordAuth />} />;
-          <Route path="/adminPage" element={<AdminPage />} />;
+          <Route path="/adminPage/colony/:colonyName" element={<AdminPage />} />;
           <Route path="/userPage" element={<UserPage />} />;
           <Route path="/creatingPost" element={<CreatingPost />} />;
-          <Route path="/editingPost/:notificationSubscriptionId" element={<EditingPost  />} />;
+          <Route
+            path="/editingPost/:notificationSubscriptionId/:version"
+            element={<EditingPost />}
+          />;
           <Route path="/loggedIn" element={<LoggedIn />} />;
         </Routes>
       </div>

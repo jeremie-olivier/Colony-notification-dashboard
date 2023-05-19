@@ -1,19 +1,22 @@
-import { useState, useEffect } from "react";
-
+import { useState } from "react";
 import { ProfileBar } from "../../components/ProfileBar";
 import { DomainForm } from "../../components/DomainForm";
 import { DiscordChannelForm } from "../../components/DiscordChannelForm";
 import { ColonyEventTypeForm } from "../../components/ColonyEventTypeForm";
 import { updateNotificationSubscriptionInput } from "../../api/updateNotificationSubs";
-import { Link, useParams } from "react-router-dom";
 import { ColonyForm } from "../../components/ColonyForm";
+import { Link, useParams } from "react-router-dom";
 
 export const EditingPost = () => {
+
   const { notificationSubscriptionId } = useParams();
+  const { version } = useParams()
   const [domainOption, setDomainOption] = useState("");
   const [discordChannelOption, setDiscordChannelOption] = useState("");
   const [colonyEventTypeOption, setColonyEventTypeOption] = useState("");
   const [colonyOption, setColonyOption] = useState("");
+ 
+
 
   const handleUpdateButtonClick = async () => {
     try {
@@ -22,7 +25,8 @@ export const EditingPost = () => {
         domainOption,
         discordChannelOption,
         colonyEventTypeOption,
-        colonyOption
+        colonyOption,
+        version
       );
     } catch (error) {
       console.error(error);
@@ -58,14 +62,14 @@ export const EditingPost = () => {
               setSelectedOption={setColonyEventTypeOption}
             />
           </div>
-          {/* <Link to="/AdminPage"> */}
+          <Link to="/AdminPage">
           <button
             className="mt-10 bg-black text-white"
             onClick={handleUpdateButtonClick}
           >
             Update
           </button>
-          {/* </Link> */}
+          </Link>
         </div>
       </div>
     </section>

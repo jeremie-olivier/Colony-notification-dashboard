@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { ProfileBar } from "../../components/ProfileBar";
 
+
 export const LoggedIn = () => {
   return (
     <section>
@@ -34,7 +35,7 @@ export const LoggedIn = () => {
           <div className="border-solid border-2 border-slate-300 h-[200px] w-[350px] p-5">
             <p className="text-3xl font-bold ">Server you manage</p>
             <div className="flex items-center mt-4">
-            <Link to="/AdminPage">
+            <Link to={`/AdminPage/colony/notificationstest`}>
               <div className="w-12 h-12 bg-gray-300 rounded-full m-2">
                 <img
                   src="https://cdn.logojoy.com/wp-content/uploads/20210422095037/discord-mascot.png"

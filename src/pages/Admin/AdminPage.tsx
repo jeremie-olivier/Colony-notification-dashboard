@@ -2,25 +2,28 @@ import { useState, useEffect } from "react";
 import { getNotificationSubscription } from "../../api/getNotificationSubscription";
 import { Colony, NotificationSubscription } from "../../API";
 import { getColonyName } from "../../api/getColonyName";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { deleteNotificationSubscription as deleteNotification } from "../../graphql/mutations";
-
 import { ProfileBar } from "../../components/ProfileBar";
 import { API, graphqlOperation } from "aws-amplify";
-//import { updateNotificationSubscriptionInput } from "../../api/updateNotificationSubs";
 
-export const AdminPage = ({ colonyName = "notificationstest" }) => {
+export const AdminPage = () => {
+  const { colonyName } = useParams();
   const [notificationSubscriptions, setNotificationSubscriptions] = useState<
     NotificationSubscription[]
   >([]);
   const [listcolonyNames, setListColonyNames] = useState<Colony[]>([]);
+  const [notificationCount, setNotificationCount] = useState(0);
 
   useEffect(() => {
     async function fetchNotificationSubscriptions() {
+      if (!colonyName) return;
       const response = await getNotificationSubscription(colonyName);
       setNotificationSubscriptions(response);
+      setNotificationCount(response.length);
     }
     async function fetchColonyNames() {
+      if (!colonyName) return;
       const response = await getColonyName(colonyName);
       setListColonyNames(response);
     }
@@ -46,7 +49,7 @@ export const AdminPage = ({ colonyName = "notificationstest" }) => {
       throw error;
     }
   };
-
+  if (!colonyName) return <p>Error</p>;
 
   return (
     <section>
@@ -66,6 +69,9 @@ export const AdminPage = ({ colonyName = "notificationstest" }) => {
                       / Discord manager settings
                     </span>
                   </p>
+                  <p className="border border-solid rounded-sm border-blue-500">
+                    {notificationCount}
+                  </p>
                 </div>
               </div>
             );
@@ -77,6 +83,9 @@ export const AdminPage = ({ colonyName = "notificationstest" }) => {
         <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
           <thead className="text-xs text-gray-700 uppercase bg-indigo-300 dark:bg-gray-700 dark:text-gray-400">
             <tr>
+              <th scope="col" className="px-6 py-3">
+                Colony
+              </th>
               <th scope="col" className="px-6 py-3">
                 Servers
               </th>
@@ -108,9 +117,12 @@ export const AdminPage = ({ colonyName = "notificationstest" }) => {
           </thead>
           <tbody>
             {notificationSubscriptions.map((notificationSubscription) => {
-              if (notificationSubscription._version === 1) {
+              if (notificationSubscription._deleted === null) {
                 return (
                   <tr key={notificationSubscription.id}>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      {notificationSubscription.colony?.name}
+                    </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       {
                         notificationSubscription.discordChannel?.discordServer
@@ -141,11 +153,10 @@ export const AdminPage = ({ colonyName = "notificationstest" }) => {
                       {notificationSubscription.hits?.items.length}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap flex space-x-3">
-                      <Link to={`/EditingPost/${notificationSubscription.id}`}>
-                        <button
-                          className="rounded-md bg-[#5765F2] text-white p-2"
-                  
-                        >
+                      <Link
+                        to={`/EditingPost/${notificationSubscription.id}/${notificationSubscription._version}`}
+                      >
+                        <button className="rounded-md bg-[#5765F2] text-white p-2">
                           Edit
                         </button>
                       </Link>
