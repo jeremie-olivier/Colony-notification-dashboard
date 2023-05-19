@@ -1,14 +1,14 @@
 import React from "react";
 import { API, graphqlOperation } from "aws-amplify";
-import { createUser } from "../graphql/mutations";
+import { updateUser } from "../graphql/mutations";
 
-export async function createUserInput(
+export async function updateUserInput(
   idDiscord: any,
   walletAddress: string
 ) {
   try {
     const response = await API.graphql(
-      graphqlOperation(createUser, {
+      graphqlOperation(updateUser, {
         input: {
           idDiscord: idDiscord,
           walletAddress: walletAddress,
@@ -18,7 +18,7 @@ export async function createUserInput(
     );
 
     if ("data" in response) {
-      return response.data.createUser;
+      return response.data.updateUser;
     }
   } catch (error) {
     // Gérez les erreurs de la requête

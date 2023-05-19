@@ -8,7 +8,7 @@ export const CreatingUser = () => {
       <div>
         <ProfileBar />
       </div>
-      <div>
+      <div className="flex justify-center mt-40">
         <CreateUser />
       </div>
     </section>

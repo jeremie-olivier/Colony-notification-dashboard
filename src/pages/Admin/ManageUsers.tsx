@@ -7,11 +7,17 @@ import { API, graphqlOperation } from "aws-amplify";
 import { getColonyName } from "../../api/getColonyName";
 import { getNotificationSubscription } from "../../api/getNotificationSubscription";
 import { Colony, NotificationSubscription } from "../../API";
+import { getUserInfo } from "../../api/getUserInfo";
+import { ListUsersQuery } from "../../API";
+
 
 export const ManageUsers = () => {
   const { colonyName } = useParams();
   const [listcolonyNames, setListColonyNames] = useState<Colony[]>([]);
-  const [notificationCount, setNotificationCount] = useState(0);
+  const [userCount, setUserCount] = useState(0);
+  const [userInfo, setUserInfo] = useState<
+  ListUsersQuery[]>
+  ([])
   const [notificationSubscriptions, setNotificationSubscriptions] = useState<
     NotificationSubscription[]
   >([]);
@@ -21,7 +27,7 @@ export const ManageUsers = () => {
       if (!colonyName) return;
       const response = await getNotificationSubscription(colonyName);
       setNotificationSubscriptions(response);
-      setNotificationCount(response.length);
+      setUserCount(response.length);
     }
     async function fetchColonyNames() {
       if (!colonyName) return;
@@ -31,6 +37,21 @@ export const ManageUsers = () => {
     fetchNotificationSubscriptions();
     fetchColonyNames();
   }, [colonyName]);
+
+// useEffect(() => {
+//   const fetchGetUserInfo = async () => {
+//     try {
+//       const response = await getUserInfo();
+//       setUserInfo(response);
+//     } catch (error) {
+//       console.error(error);
+//     }
+//   };
+
+//   fetchGetUserInfo();
+// }, []); 
+ 
+  
 
   return (
     <section>
@@ -50,7 +71,7 @@ export const ManageUsers = () => {
                       / User manager settings
                     </span>
                   </p>
-                  <p className="">Total user : {notificationCount}</p>
+                  <p className="">Total user : {userCount}</p>
                 </div>
               </div>
             );
@@ -94,13 +115,15 @@ export const ManageUsers = () => {
                       {notificationSubscription.createdAt}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap flex space-x-3">
+                      {/* {userInfo.map((user)=> 
                       <Link
-                        to={`/EditingPost/${notificationSubscription.id}/${notificationSubscription._version}`}
+                      to={`/EditingUser/${user.listUsers?.items[0]?.id}`}
                       >
                         <button className="rounded-md bg-[#5765F2] text-white p-2">
                           Edit
                         </button>
                       </Link>
+                        )} */}
                       <button className="rounded-md text-white bg-red-600 p-2">
                         Delete
                       </button>

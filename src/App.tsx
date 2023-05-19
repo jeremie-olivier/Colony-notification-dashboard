@@ -13,6 +13,7 @@ import { LoggedIn } from "./pages/Login/LoggedIn";
 import { ManageServer } from "./pages/Admin/ManageServer";
 import { ManageUsers } from "./pages/Admin/ManageUsers";
 import { CreatingUser } from "./pages/General/CreatingUser";
+import { EditingUser } from "./pages/General/EditingUser";
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
           <Route path="/manageServer/colony/:colonyName" element={<ManageServer />} />;
           <Route path="/manageUsers/colony/:colonyName" element={<ManageUsers />} />;
           <Route  path="/creatingUser"  element={<CreatingUser />} />;
+          <Route path="/editingUser/:userinfo" element={<EditingUser />} />
         </Routes>
       </div>
     </AmplifyProvider>
