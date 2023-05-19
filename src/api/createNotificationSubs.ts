@@ -14,9 +14,7 @@ export async function createNotificationSubscriptionInput(domainOption: any, dis
       },
     }));
 
-    console.log(response)
     if ('data' in response) {
-      console.log(response)
       return response.data.createNotificationSubscription;
     }
 

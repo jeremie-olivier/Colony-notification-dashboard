@@ -69,7 +69,7 @@ export const AdminPage = () => {
                       / Discord manager settings
                     </span>
                   </p>
-                  <p className="border border-solid rounded-sm border-blue-500">
+                  <p className="">
                     {notificationCount}
                   </p>
                 </div>

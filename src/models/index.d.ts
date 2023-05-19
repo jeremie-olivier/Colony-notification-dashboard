@@ -57,6 +57,7 @@ type EagerColony = {
   readonly name?: string | null;
   readonly domains?: (Domain | null)[] | null;
   readonly url?: string | null;
+  readonly Users?: (User | null)[] | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -72,6 +73,7 @@ type LazyColony = {
   readonly name?: string | null;
   readonly domains: AsyncCollection<Domain>;
   readonly url?: string | null;
+  readonly Users: AsyncCollection<User>;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -245,6 +247,7 @@ type EagerUser = {
   readonly idDiscord?: string | null;
   readonly walletAddress?: string | null;
   readonly managerOfDiscords?: (UserDiscordServer | null)[] | null;
+  readonly colonyID: string;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -260,6 +263,7 @@ type LazyUser = {
   readonly idDiscord?: string | null;
   readonly walletAddress?: string | null;
   readonly managerOfDiscords: AsyncCollection<UserDiscordServer>;
+  readonly colonyID: string;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }

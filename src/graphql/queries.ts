@@ -133,6 +133,10 @@ export const getColony = /* GraphQL */ `
         startedAt
       }
       url
+      Users {
+        nextToken
+        startedAt
+      }
       createdAt
       updatedAt
       _version
@@ -201,6 +205,7 @@ export const getMention = /* GraphQL */ `
         id
         idDiscord
         walletAddress
+        colonyID
         createdAt
         updatedAt
         _version
@@ -378,6 +383,7 @@ export const getNotificationSubscription = /* GraphQL */ `
         id
         idDiscord
         walletAddress
+        colonyID
         createdAt
         updatedAt
         _version
@@ -821,6 +827,7 @@ export const getUser = /* GraphQL */ `
         nextToken
         startedAt
       }
+      colonyID
       createdAt
       updatedAt
       _version
@@ -840,6 +847,7 @@ export const listUsers = /* GraphQL */ `
         id
         idDiscord
         walletAddress
+        colonyID
         createdAt
         updatedAt
         _version
@@ -868,6 +876,38 @@ export const syncUsers = /* GraphQL */ `
         id
         idDiscord
         walletAddress
+        colonyID
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      nextToken
+      startedAt
+    }
+  }
+`;
+export const usersByColonyID = /* GraphQL */ `
+  query UsersByColonyID(
+    $colonyID: ID!
+    $sortDirection: ModelSortDirection
+    $filter: ModelUserFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    usersByColonyID(
+      colonyID: $colonyID
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        idDiscord
+        walletAddress
+        colonyID
         createdAt
         updatedAt
         _version
@@ -1216,6 +1256,7 @@ export const getUserDiscordServer = /* GraphQL */ `
         id
         idDiscord
         walletAddress
+        colonyID
         createdAt
         updatedAt
         _version

@@ -185,6 +185,22 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
+                "Users": {
+                    "name": "Users",
+                    "isArray": true,
+                    "type": {
+                        "model": "User"
+                    },
+                    "isRequired": false,
+                    "attributes": [],
+                    "isArrayNullable": true,
+                    "association": {
+                        "connectionType": "HAS_MANY",
+                        "associatedWith": [
+                            "colonyID"
+                        ]
+                    }
+                },
                 "createdAt": {
                     "name": "createdAt",
                     "isArray": false,
@@ -840,6 +856,13 @@ export const schema = {
                         ]
                     }
                 },
+                "colonyID": {
+                    "name": "colonyID",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
+                },
                 "createdAt": {
                     "name": "createdAt",
                     "isArray": false,
@@ -863,6 +886,15 @@ export const schema = {
                 {
                     "type": "model",
                     "properties": {}
+                },
+                {
+                    "type": "key",
+                    "properties": {
+                        "name": "byColony",
+                        "fields": [
+                            "colonyID"
+                        ]
+                    }
                 },
                 {
                     "type": "auth",
@@ -1259,5 +1291,5 @@ export const schema = {
     },
     "nonModels": {},
     "codegenVersion": "3.4.0",
-    "version": "1b1d77ba1654364b0c8b978b69cdaede"
+    "version": "0aeab01cfe36c46dd6aeed391b986554"
 };

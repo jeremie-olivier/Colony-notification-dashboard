@@ -13,14 +13,14 @@ type DiscordChannel @model @auth(rules: [{allow: public}]) {
   name: String
 }
 
-type Colony @model @auth(rules: [{allow: public}])  {
-  
+type Colony @model @auth(rules: [{allow: public}]) {
   id: ID!
   notifyInDiscordServers: [DiscordServer] @manyToMany(relationName: "ColonyDiscordServer")
   notificationSubscriptions: [NotificationSubscription] @hasMany(indexName: "byColonySubscription", fields: ["id"])
   name: String
   domains: [Domain] @hasMany(indexName: "byColony", fields: ["id"])
   url: AWSURL
+  Users: [User] @hasMany(indexName: "byColony", fields: ["id"])
 }
 
 type Mention @model @auth(rules: [{allow: public}]) {
@@ -33,18 +33,15 @@ type Mention @model @auth(rules: [{allow: public}]) {
 
 type NotificationSubscription @model @auth(rules: [{allow: public}]) {
   id: ID!
-
   colony: Colony @belongsTo(fields: ["colonyId"])
   domain: Domain @belongsTo(fields: ["domainId"])
   discordChannel: DiscordChannel @belongsTo(fields: ["discordChannelId"])
   colonyEventType: ColonyEventType @belongsTo(fields: ["colonyEventTypeId"])
   author: User @belongsTo(fields: ["authorId"])
-
   colonyId: ID! @index(name: "byColonySubscription")
   domainId: ID! @index(name: "byDomainSubscription")
-  discordChannelId: ID! @index(name:"byDiscordChannelSubscription")
-  colonyEventTypeId: ID! @index(name:"byColonyEventTypeSubscription")
-
+  discordChannelId: ID! @index(name: "byDiscordChannelSubscription")
+  colonyEventTypeId: ID! @index(name: "byColonyEventTypeSubscription")
   authorId: ID! @index(name: "byUser")
   hits: [Hit] @hasMany(indexName: "byNotificationSubscription", fields: ["id"])
   mentions: [Mention] @hasMany(indexName: "byNotificationSubscription", fields: ["id"])
@@ -73,6 +70,7 @@ type User @model @auth(rules: [{allow: public}]) {
   idDiscord: String
   walletAddress: String
   managerOfDiscords: [DiscordServer] @manyToMany(relationName: "UserDiscordServer")
+  colonyID: ID! @index(name: "byColony")
 }
 
 type ColonyEventType @model @auth(rules: [{allow: public}]) {

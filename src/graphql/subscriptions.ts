@@ -116,6 +116,10 @@ export const onCreateColony = /* GraphQL */ `
         startedAt
       }
       url
+      Users {
+        nextToken
+        startedAt
+      }
       createdAt
       updatedAt
       _version
@@ -142,6 +146,10 @@ export const onUpdateColony = /* GraphQL */ `
         startedAt
       }
       url
+      Users {
+        nextToken
+        startedAt
+      }
       createdAt
       updatedAt
       _version
@@ -168,6 +176,10 @@ export const onDeleteColony = /* GraphQL */ `
         startedAt
       }
       url
+      Users {
+        nextToken
+        startedAt
+      }
       createdAt
       updatedAt
       _version
@@ -186,6 +198,7 @@ export const onCreateMention = /* GraphQL */ `
         id
         idDiscord
         walletAddress
+        colonyID
         createdAt
         updatedAt
         _version
@@ -211,6 +224,7 @@ export const onUpdateMention = /* GraphQL */ `
         id
         idDiscord
         walletAddress
+        colonyID
         createdAt
         updatedAt
         _version
@@ -236,6 +250,7 @@ export const onDeleteMention = /* GraphQL */ `
         id
         idDiscord
         walletAddress
+        colonyID
         createdAt
         updatedAt
         _version
@@ -301,6 +316,7 @@ export const onCreateNotificationSubscription = /* GraphQL */ `
         id
         idDiscord
         walletAddress
+        colonyID
         createdAt
         updatedAt
         _version
@@ -378,6 +394,7 @@ export const onUpdateNotificationSubscription = /* GraphQL */ `
         id
         idDiscord
         walletAddress
+        colonyID
         createdAt
         updatedAt
         _version
@@ -455,6 +472,7 @@ export const onDeleteNotificationSubscription = /* GraphQL */ `
         id
         idDiscord
         walletAddress
+        colonyID
         createdAt
         updatedAt
         _version
@@ -629,6 +647,7 @@ export const onCreateUser = /* GraphQL */ `
         nextToken
         startedAt
       }
+      colonyID
       createdAt
       updatedAt
       _version
@@ -655,6 +674,7 @@ export const onUpdateUser = /* GraphQL */ `
         nextToken
         startedAt
       }
+      colonyID
       createdAt
       updatedAt
       _version
@@ -681,6 +701,7 @@ export const onDeleteUser = /* GraphQL */ `
         nextToken
         startedAt
       }
+      colonyID
       createdAt
       updatedAt
       _version
@@ -934,6 +955,7 @@ export const onCreateUserDiscordServer = /* GraphQL */ `
         id
         idDiscord
         walletAddress
+        colonyID
         createdAt
         updatedAt
         _version
@@ -971,6 +993,7 @@ export const onUpdateUserDiscordServer = /* GraphQL */ `
         id
         idDiscord
         walletAddress
+        colonyID
         createdAt
         updatedAt
         _version
@@ -1008,6 +1031,7 @@ export const onDeleteUserDiscordServer = /* GraphQL */ `
         id
         idDiscord
         walletAddress
+        colonyID
         createdAt
         updatedAt
         _version

@@ -12,5 +12,3 @@ export { default as ColonyCreateForm } from "./ColonyCreateForm";
 export { default as ColonyUpdateForm } from "./ColonyUpdateForm";
 export { default as DiscordServerCreateForm } from "./DiscordServerCreateForm";
 export { default as DiscordServerUpdateForm } from "./DiscordServerUpdateForm";
-export { default as UserCreateForm } from "./UserCreateForm";
-export { default as UserUpdateForm } from "./UserUpdateForm";

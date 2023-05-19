@@ -10,6 +10,9 @@ import { DiscordAuth } from "./pages/Login/DiscordAuth";
 import { CreatingPost } from "./pages/General/CreatingPost";
 import { EditingPost } from "./pages/General/EditingPost";
 import { LoggedIn } from "./pages/Login/LoggedIn";
+import { ManageServer } from "./pages/Admin/ManageServer";
+import { ManageUsers } from "./pages/Admin/ManageUsers";
+import { CreatingUser } from "./pages/General/CreatingUser";
 
 function App() {
   return (
@@ -26,6 +29,9 @@ function App() {
             element={<EditingPost />}
           />;
           <Route path="/loggedIn" element={<LoggedIn />} />;
+          <Route path="/manageServer/colony/:colonyName" element={<ManageServer />} />;
+          <Route path="/manageUsers/colony/:colonyName" element={<ManageUsers />} />;
+          <Route  path="/creatingUser"  element={<CreatingUser />} />;
         </Routes>
       </div>
     </AmplifyProvider>
