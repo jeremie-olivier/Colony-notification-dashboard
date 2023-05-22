@@ -1,5 +1,7 @@
 import { ChangeEvent, useState } from "react";
 import { updateUserInput } from "../api/updateUserInput";
+import { Link } from "react-router-dom";
+
 
 
 
@@ -49,7 +51,9 @@ export const UpdateUser = (user: any) => {
           onChange={handleWalletAddressChange}
         />
       </div>
+      <Link to="/manageUsers">
       <button onClick={handleUpdateUser}>Update User</button>
+      </Link>
     </div>
   );
 };

@@ -19,7 +19,9 @@ export const ManageUsers = () => {
     async function fetchUserList() {
       if (!colonyName) return;
       const response = await getUserColony(colonyName);
-      const filteredUserList = response.filter((user: { _deleted: null; }) => user._deleted === null);
+      const filteredUserList = response.filter(
+        (user: { _deleted: null }) => user._deleted === null
+      );
       setUserList(filteredUserList);
       setUserCount(filteredUserList.length);
     }
@@ -34,21 +36,17 @@ export const ManageUsers = () => {
 
   const DeleteUsers = async (user: any) => {
     try {
-      const input = { id: user.id, _version: user._version};
-      await API.graphql(graphqlOperation(deleteUser, {input}));
+      const input = { id: user.id, _version: user._version };
+      await API.graphql(graphqlOperation(deleteUser, { input }));
 
       const updatedUsers = await getUserColony("notificationstest");
       setUserList(updatedUsers);
       window.location.reload();
     } catch (error) {
-      console.error(
-        "Erreur lors de la suppression de l'utilisateur :",
-        error
-      );
+      console.error("Erreur lors de la suppression de l'utilisateur :", error);
 
       throw error;
     }
-
   };
 
   return (
@@ -110,13 +108,15 @@ export const ManageUsers = () => {
                       {user.createdAt}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap flex space-x-3">
-                      <Link to={`/EditingUser/${user.id}`} state={{user}} >
+                      <Link to={`/EditingUser/${user.id}`} state={{ user }}>
                         <button className="rounded-md bg-[#5765F2] text-white p-2">
                           Edit
                         </button>
                       </Link>
-
-                      <button className="rounded-md text-white bg-red-600 p-2" onClick={() => DeleteUsers(user)}>
+                      <button
+                        className="rounded-md text-white bg-red-600 p-2"
+                        onClick={() => DeleteUsers(user)}
+                      >
                         Delete
                       </button>
                     </td>
