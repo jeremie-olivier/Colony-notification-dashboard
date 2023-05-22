@@ -19,8 +19,9 @@ export const ManageUsers = () => {
     async function fetchUserList() {
       if (!colonyName) return;
       const response = await getUserColony(colonyName);
-      setUserList(response);
-      setUserCount(response.length);
+      const filteredUserList = response.filter((user: { _deleted: null; }) => user._deleted === null);
+      setUserList(filteredUserList);
+      setUserCount(filteredUserList.length);
     }
     async function fetchColonyNames() {
       if (!colonyName) return;
@@ -37,7 +38,8 @@ export const ManageUsers = () => {
       await API.graphql(graphqlOperation(deleteUser, {input}));
 
       const updatedUsers = await getUserColony("notificationstest");
-      setUserList(updatedUsers)
+      setUserList(updatedUsers);
+      window.location.reload();
     } catch (error) {
       console.error(
         "Erreur lors de la suppression de l'utilisateur :",
