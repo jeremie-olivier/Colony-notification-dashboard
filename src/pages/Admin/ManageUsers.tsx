@@ -3,30 +3,21 @@ import { Link, useParams } from "react-router-dom";
 import { ProfileBar } from "../../components/ProfileBar";
 
 import { useState, useEffect } from "react";
-import { API, graphqlOperation } from "aws-amplify";
 import { getColonyName } from "../../api/getColonyName";
-import { getNotificationSubscription } from "../../api/getNotificationSubscription";
-import { Colony, NotificationSubscription } from "../../API";
-import { getUserInfo } from "../../api/getUserInfo";
-import { ListUsersQuery } from "../../API";
-
+import { Colony, ListUsersQuery } from "../../API";
+import { getUserColony } from "../../api/getUserInfo";
 
 export const ManageUsers = () => {
   const { colonyName } = useParams();
   const [listcolonyNames, setListColonyNames] = useState<Colony[]>([]);
   const [userCount, setUserCount] = useState(0);
-  const [userInfo, setUserInfo] = useState<
-  ListUsersQuery[]>
-  ([])
-  const [notificationSubscriptions, setNotificationSubscriptions] = useState<
-    NotificationSubscription[]
-  >([]);
+  const [userList, setUserList] = useState<ListUsersQuery[]>([]);
 
   useEffect(() => {
-    async function fetchNotificationSubscriptions() {
+    async function fetchUserList() {
       if (!colonyName) return;
-      const response = await getNotificationSubscription(colonyName);
-      setNotificationSubscriptions(response);
+      const response = await getUserColony(colonyName);
+      setUserList(response);
       setUserCount(response.length);
     }
     async function fetchColonyNames() {
@@ -34,24 +25,9 @@ export const ManageUsers = () => {
       const response = await getColonyName(colonyName);
       setListColonyNames(response);
     }
-    fetchNotificationSubscriptions();
+    fetchUserList();
     fetchColonyNames();
   }, [colonyName]);
-
-// useEffect(() => {
-//   const fetchGetUserInfo = async () => {
-//     try {
-//       const response = await getUserInfo();
-//       setUserInfo(response);
-//     } catch (error) {
-//       console.error(error);
-//     }
-//   };
-
-//   fetchGetUserInfo();
-// }, []); 
- 
-  
 
   return (
     <section>
@@ -84,13 +60,13 @@ export const ManageUsers = () => {
           <thead className="text-xs text-gray-700 uppercase bg-indigo-300 dark:bg-gray-700 dark:text-gray-400">
             <tr>
               <th scope="col" className="px-6 py-3">
-                Name
-              </th>
-              <th scope="col" className="px-6 py-3">
                 Discord Id
               </th>
               <th scope="col" className="px-6 py-3">
                 Wallet Adress
+              </th>
+              <th scope="col" className="px-6 py-3">
+                Created At
               </th>
               <th scope="col" className="px-6 py-3">
                 Action
@@ -98,32 +74,26 @@ export const ManageUsers = () => {
             </tr>
           </thead>
           <tbody>
-            {notificationSubscriptions.map((notificationSubscription) => {
-              if (notificationSubscription._deleted === null) {
+            {userList.map((user: any) => {
+              if (user._deleted === null) {
                 return (
-                  <tr key={notificationSubscription.id}>
+                  <tr key={user.id}>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      {notificationSubscription.colony?.name}
+                      {user.idDiscord}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      {
-                        notificationSubscription.discordChannel?.discordServer
-                          ?.name
-                      }
+                      {user.walletAddress}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      {notificationSubscription.createdAt}
+                      {user.createdAt}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap flex space-x-3">
-                      {/* {userInfo.map((user)=> 
-                      <Link
-                      to={`/EditingUser/${user.listUsers?.items[0]?.id}`}
-                      >
+                      <Link to={`/EditingUser/${user.id}`} state={{user}} >
                         <button className="rounded-md bg-[#5765F2] text-white p-2">
                           Edit
                         </button>
                       </Link>
-                        )} */}
+
                       <button className="rounded-md text-white bg-red-600 p-2">
                         Delete
                       </button>

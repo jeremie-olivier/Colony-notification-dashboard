@@ -2,13 +2,16 @@ import { ChangeEvent, useState } from "react";
 import { updateUserInput } from "../api/updateUserInput";
 
 
-export const UpdateUser = () => {
-  const [idDiscord, setIdDiscord] = useState("");
-  const [walletAddress, setWalletAddress] = useState("");
+
+export const UpdateUser = (user: any) => {
+  const [idDiscord, setIdDiscord] = useState(user.user.idDiscord || "");
+  const [walletAddress, setWalletAddress] = useState(user.user.walletAddress || "");
+  const [userId, ] = useState(user.user.id || "")
+  const [version, ] = useState(user.user._version || "")
 
   const handleUpdateUser = async () => {
     try {
-      await updateUserInput(idDiscord, walletAddress);
+      await updateUserInput(idDiscord, walletAddress, userId, version);
 
     } catch (error) {
       console.error(error);
@@ -24,6 +27,7 @@ export const UpdateUser = () => {
     setWalletAddress(e.target.value);
   };
 
+
   return (
     <div>
       <div>
@@ -32,6 +36,7 @@ export const UpdateUser = () => {
           type="text"
           id="idDiscord"
           value={idDiscord}
+        
           onChange={handleIdDiscordChange}
         />
       </div>
@@ -44,7 +49,7 @@ export const UpdateUser = () => {
           onChange={handleWalletAddressChange}
         />
       </div>
-      <button onClick={handleUpdateUser}>Create User</button>
+      <button onClick={handleUpdateUser}>Update User</button>
     </div>
   );
 };

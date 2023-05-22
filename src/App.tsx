@@ -22,17 +22,27 @@ function App() {
         <Routes>
           <Route path="/" element={<LoginDiscord />} />;
           <Route path="/discordAuth" element={<DiscordAuth />} />;
-          <Route path="/adminPage/colony/:colonyName" element={<AdminPage />} />;
+          <Route path="/adminPage/colony/:colonyName" element={<AdminPage />} />
+          ;
           <Route path="/userPage" element={<UserPage />} />;
           <Route path="/creatingPost" element={<CreatingPost />} />;
           <Route
             path="/editingPost/:notificationSubscriptionId/:version"
             element={<EditingPost />}
-          />;
+          />
+          ;
           <Route path="/loggedIn" element={<LoggedIn />} />;
-          <Route path="/manageServer/colony/:colonyName" element={<ManageServer />} />;
-          <Route path="/manageUsers/colony/:colonyName" element={<ManageUsers />} />;
-          <Route  path="/creatingUser"  element={<CreatingUser />} />;
+          <Route
+            path="/manageServer/colony/:colonyName"
+            element={<ManageServer />}
+          />
+          ;
+          <Route
+            path="/manageUsers/colony/:colonyName"
+            element={<ManageUsers />}
+          />
+          ;
+          <Route path="/creatingUser" element={<CreatingUser />} />;
           <Route path="/editingUser/:userinfo" element={<EditingUser />} />
         </Routes>
       </div>

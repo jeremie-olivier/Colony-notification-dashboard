@@ -69,9 +69,7 @@ export const AdminPage = () => {
                       / Discord manager settings
                     </span>
                   </p>
-                  <p className="">
-                    {notificationCount}
-                  </p>
+                  <p className="">{notificationCount}</p>
                 </div>
               </div>
             );

@@ -1,4 +1,4 @@
-import React from "react";
+
 import { API, graphqlOperation } from "aws-amplify";
 import { createUser } from "../graphql/mutations";
 
@@ -13,6 +13,7 @@ export async function createUserInput(
           idDiscord: idDiscord,
           walletAddress: walletAddress,
           colonyID: "c7ab5019-9f19-4e97-a67d-edd99a90f978",
+       
         },
       })
     );
