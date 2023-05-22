@@ -5,7 +5,9 @@ import { ProfileBar } from "../../components/ProfileBar";
 import { useState, useEffect } from "react";
 import { getColonyName } from "../../api/getColonyName";
 import { Colony, ListUsersQuery } from "../../API";
-import { getUserColony } from "../../api/getUserInfo";
+import { getUserColony } from "../../api/getUserColony";
+import { API, graphqlOperation } from "aws-amplify";
+import { deleteUser } from "../../graphql/mutations";
 
 export const ManageUsers = () => {
   const { colonyName } = useParams();
@@ -28,6 +30,24 @@ export const ManageUsers = () => {
     fetchUserList();
     fetchColonyNames();
   }, [colonyName]);
+
+  const DeleteUsers = async (user: any) => {
+    try {
+      const input = { id: user.id, _version: user._version};
+      await API.graphql(graphqlOperation(deleteUser, {input}));
+
+      const updatedUsers = await getUserColony("notificationstest");
+      setUserList(updatedUsers)
+    } catch (error) {
+      console.error(
+        "Erreur lors de la suppression de l'utilisateur :",
+        error
+      );
+
+      throw error;
+    }
+
+  };
 
   return (
     <section>
@@ -94,7 +114,7 @@ export const ManageUsers = () => {
                         </button>
                       </Link>
 
-                      <button className="rounded-md text-white bg-red-600 p-2">
+                      <button className="rounded-md text-white bg-red-600 p-2" onClick={() => DeleteUsers(user)}>
                         Delete
                       </button>
                     </td>
