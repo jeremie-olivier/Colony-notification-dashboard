@@ -10,7 +10,7 @@ export const EditingUser = () => {
       <div>
         <ProfileBar />
       </div>
-      <div>
+      <div className="flex justify-center mt-40">
         <UpdateUser user={state.user} />
       </div>
     </section>

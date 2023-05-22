@@ -49,15 +49,15 @@ export const CreatingPost = () => {
               setSelectedOption={setMentionOption}
             />
           </div>
-            <ColonyEventTypeForm
-              selectedOption={colonyEventTypeOption}
-              setSelectedOption={setColonyEventTypeOption}
-            />
+          <ColonyEventTypeForm
+            selectedOption={colonyEventTypeOption}
+            setSelectedOption={setColonyEventTypeOption}
+          />
           <button
-            className="mt-10 bg-black text-white"
+            className="flex justify-center mt-10 text-white bg-[#41AE9F] hover:bg-[#308176] rounded-md font-bold p-3"
             onClick={handleSaveButtonClick}
           >
-            SAVE
+            Save
           </button>
         </div>
       </div>

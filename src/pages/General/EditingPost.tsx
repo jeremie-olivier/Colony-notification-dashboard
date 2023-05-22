@@ -64,7 +64,7 @@ export const EditingPost = () => {
           </div>
           <Link to="/AdminPage">
           <button
-            className="mt-10 bg-black text-white"
+            className="flex justify-center mt-10 text-white bg-[#41AE9F] hover:bg-[#308176] rounded-md font-bold p-3"
             onClick={handleUpdateButtonClick}
           >
             Update

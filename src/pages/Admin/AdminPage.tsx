@@ -74,7 +74,7 @@ export const AdminPage = () => {
                       / Discord manager settings
                     </span>
                   </p>
-                  <p className="">{notificationCount}</p>
+                  <p className="">Total notifications : {notificationCount}</p>
                 </div>
               </div>
             );
@@ -159,12 +159,12 @@ export const AdminPage = () => {
                       <Link
                         to={`/EditingPost/${notificationSubscription.id}/${notificationSubscription._version}`}
                       >
-                        <button className="rounded-md bg-[#5765F2] text-white p-2">
+                        <button className="rounded-md bg-[#5765F2] hover:bg-[#3B45A0] text-white p-2">
                           Edit
                         </button>
                       </Link>
                       <button
-                        className="rounded-md text-white bg-red-600 p-2"
+                        className="rounded-md text-white bg-red-600 hover:bg-[#A81F1F] p-2"
                         onClick={() => Delete(notificationSubscription)}
                       >
                         Delete
@@ -180,7 +180,7 @@ export const AdminPage = () => {
       </div>
       <div className="flex justify-center">
         <Link to="/CreatingPost">
-          <button className="rounded-md bg-[#5765F2] text-white p-3 m-8">
+          <button className="rounded-md bg-[#5765F2] hover:bg-[#3B45A0] text-white p-3 m-8">
             Create new subscription
           </button>
         </Link>

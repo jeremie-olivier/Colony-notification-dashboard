@@ -9,7 +9,7 @@ export const DiscordAuth = () => {
     </div>
     <div className='flex justify-center'>
        <Link to="/LoggedIn">
-          <button className="rounded-md bg-[#5765F2] text-white p-3 m-8">
+          <button className="rounded-md bg-[#5765F2] hover:bg-[#3B45A0] text-white p-3 m-8">
             Authorize
           </button>
         </Link>
