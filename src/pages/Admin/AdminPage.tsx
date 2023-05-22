@@ -51,6 +51,11 @@ export const AdminPage = () => {
   };
   if (!colonyName) return <p>Error</p>;
 
+  const formatDate = (dateString: string) => {
+    const date = new Date(dateString);
+    return date.toLocaleString();
+  };
+
   return (
     <section>
       <div>
@@ -128,7 +133,7 @@ export const AdminPage = () => {
                       }
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      {notificationSubscription.createdAt}
+                    {formatDate(notificationSubscription.createdAt)}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       {notificationSubscription.author?.idDiscord}

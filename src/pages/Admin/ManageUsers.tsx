@@ -49,6 +49,11 @@ export const ManageUsers = () => {
     }
   };
 
+  const formatDate = (dateString: string) => {
+    const date = new Date(dateString);
+    return date.toLocaleString();
+  };
+
   return (
     <section>
       <div>
@@ -105,7 +110,7 @@ export const ManageUsers = () => {
                       {user.walletAddress}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      {user.createdAt}
+                      {formatDate(user.createdAt)}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap flex space-x-3">
                       <Link to={`/EditingUser/${user.id}`} state={{ user }}>
