@@ -1,5 +1,6 @@
 import { ChangeEvent, useState, useEffect, Dispatch, SetStateAction } from "react";
 import { getMentionForm } from "../api/getMentionForm";
+import { getUsersByGuildId } from "../api/getDiscordUsers";
 
 interface MentionFormProps {
   selectedOption: string;
@@ -13,6 +14,11 @@ export const MentionForm = ({ selectedOption, setSelectedOption }: MentionFormPr
   useEffect(() => {
     async function fetchgetDomain() {
       const response = await getMentionForm("notificationstest");
+      const users = await getUsersByGuildId("1066783105752506440")
+      const roles = await getUsersByGuildId("1066783105752506440")
+
+      debugger;
+
       setGetMention(response);
     }
     fetchgetDomain();
