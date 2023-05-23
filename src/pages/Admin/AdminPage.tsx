@@ -19,8 +19,11 @@ export const AdminPage = () => {
     async function fetchNotificationSubscriptions() {
       if (!colonyName) return;
       const response = await getNotificationSubscription(colonyName);
-      setNotificationSubscriptions(response);
-      setNotificationCount(response.length);
+      const filteredSubscriptions = response.filter(
+        (notificationSubscription: { _deleted: null; }) => notificationSubscription._deleted === null
+      );
+      setNotificationSubscriptions(filteredSubscriptions);
+      setNotificationCount(filteredSubscriptions.length);
     }
     async function fetchColonyNames() {
       if (!colonyName) return;
