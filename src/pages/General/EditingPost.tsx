@@ -15,7 +15,7 @@ export const EditingPost = () => {
   const [discordChannelOption, setDiscordChannelOption] = useState("");
   const [colonyEventTypeOption, setColonyEventTypeOption] = useState("");
   const [colonyOption, setColonyOption] = useState("");
- 
+
 
 
   const handleUpdateButtonClick = async () => {
@@ -35,7 +35,6 @@ export const EditingPost = () => {
 
   return (
     <section>
-      <ProfileBar />
       <div className="flex justify-center">
         <div className="flex-col w-[800px]">
           <div className="">
@@ -62,13 +61,13 @@ export const EditingPost = () => {
               setSelectedOption={setColonyEventTypeOption}
             />
           </div>
-          <Link to="/AdminPage">
-          <button
-            className="flex justify-center mt-10 text-white bg-[#41AE9F] hover:bg-[#308176] rounded-md font-bold p-3"
-            onClick={handleUpdateButtonClick}
-          >
-            Update
-          </button>
+          <Link to="../list">
+            <button
+              className="flex justify-center mt-10 text-white bg-[#41AE9F] hover:bg-[#308176] rounded-md font-bold p-3"
+              onClick={handleUpdateButtonClick}
+            >
+              Update
+            </button>
           </Link>
         </div>
       </div>

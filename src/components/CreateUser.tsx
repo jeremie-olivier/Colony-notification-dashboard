@@ -49,7 +49,7 @@ export const CreateUser = () => {
         />
       </div>
       <div className="flex justify-center bg-[#41AE9F] hover:bg-[#308176] rounded-md text-white font-bold p-2">
-        <Link to="/manageUsers">
+        <Link to="../list">
           <button onClick={handleCreateUser}>Create User</button>
         </Link>
       </div>

@@ -10,7 +10,9 @@ import { API, graphqlOperation } from "aws-amplify";
 import { deleteUser } from "../../graphql/mutations";
 
 export const ManageUsers = () => {
-  const { colonyName } = useParams();
+  const { discordServerName } = useParams();
+  let colonyName = discordServerName
+
   const [listcolonyNames, setListColonyNames] = useState<Colony[]>([]);
   const [userCount, setUserCount] = useState(0);
   const [userList, setUserList] = useState<ListUsersQuery[]>([]);
@@ -57,7 +59,6 @@ export const ManageUsers = () => {
   return (
     <section>
       <div>
-        <ProfileBar />
       </div>
       <div className="font-bold text-2xl mt-7 ml-7">
         {listcolonyNames.map((colony) => {
@@ -67,7 +68,7 @@ export const ManageUsers = () => {
                 <div>
                   {" "}
                   <p>
-                    {colony.name}{" "}
+                    <Link to={`/admin/discordServer/${colony.name}`}>{colony.name}</Link>
                     <span className="font-semibold">
                       / User manager settings
                     </span>
@@ -113,7 +114,7 @@ export const ManageUsers = () => {
                       {formatDate(user.createdAt)}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap flex space-x-3">
-                      <Link to={`/EditingUser/${user.id}`} state={{ user }}>
+                      <Link to={`../edit/${user.id}`} state={{ user }}>
                         <button className="rounded-md bg-[#5765F2] hover:bg-[#3B45A0] text-white p-2">
                           Edit
                         </button>
@@ -134,7 +135,7 @@ export const ManageUsers = () => {
         </table>
       </div>
       <div className="flex justify-center">
-        <Link to="/creatingUser">
+        <Link to="../create">
           <button className="rounded-md bg-[#5765F2] hover:bg-[#3B45A0] text-white p-3 m-8">
             Create new user
           </button>

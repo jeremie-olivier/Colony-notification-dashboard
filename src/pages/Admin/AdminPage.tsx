@@ -8,14 +8,19 @@ import { ProfileBar } from "../../components/ProfileBar";
 import { API, graphqlOperation } from "aws-amplify";
 
 export const AdminPage = () => {
-  const { colonyName } = useParams();
+  const { discordServerName } = useParams();
   const [notificationSubscriptions, setNotificationSubscriptions] = useState<
     NotificationSubscription[]
   >([]);
   const [listcolonyNames, setListColonyNames] = useState<Colony[]>([]);
   const [notificationCount, setNotificationCount] = useState(0);
 
+  // TODO : Change request from ColonyName to Discord Server 
+  let colonyName = discordServerName;
+
   useEffect(() => {
+
+
     async function fetchNotificationSubscriptions() {
       if (!colonyName) return;
       const response = await getNotificationSubscription(colonyName);
@@ -61,9 +66,7 @@ export const AdminPage = () => {
 
   return (
     <section>
-      <div>
-        <ProfileBar />
-      </div>
+
       <div className="font-bold text-2xl mt-7 ml-7">
         {listcolonyNames.map((colony) => {
           if (colony.name === colonyName) {
@@ -72,7 +75,8 @@ export const AdminPage = () => {
                 <div>
                   {" "}
                   <p>
-                    {colony.name}{" "}
+
+                    <Link to={`/admin/discordServer/${colony.name}`}>{colony.name}</Link>
                     <span className="font-semibold">
                       / Discord manager settings
                     </span>
@@ -136,7 +140,7 @@ export const AdminPage = () => {
                       }
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                    {formatDate(notificationSubscription.createdAt)}
+                      {formatDate(notificationSubscription.createdAt)}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       {notificationSubscription.author?.idDiscord}
@@ -160,7 +164,7 @@ export const AdminPage = () => {
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap flex space-x-3">
                       <Link
-                        to={`/EditingPost/${notificationSubscription.id}/${notificationSubscription._version}`}
+                        to={`../edit/${notificationSubscription.id}/${notificationSubscription._version}`}
                       >
                         <button className="rounded-md bg-[#5765F2] hover:bg-[#3B45A0] text-white p-2">
                           Edit
@@ -182,7 +186,7 @@ export const AdminPage = () => {
         </table>
       </div>
       <div className="flex justify-center">
-        <Link to="/CreatingPost">
+        <Link to="../create">
           <button className="rounded-md bg-[#5765F2] hover:bg-[#3B45A0] text-white p-3 m-8">
             Create new subscription
           </button>

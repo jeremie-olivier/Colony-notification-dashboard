@@ -14,6 +14,7 @@ import { ManageServer } from "./pages/Admin/ManageServer";
 import { ManageUsers } from "./pages/Admin/ManageUsers";
 import { CreatingUser } from "./pages/General/CreatingUser";
 import { EditingUser } from "./pages/General/EditingUser";
+import { AdminOptions } from "./pages/Admin/AdminOptions";
 
 function App() {
   return (
@@ -22,32 +23,52 @@ function App() {
         <Routes>
           <Route path="/" element={<LoginDiscord />} />;
           <Route path="/discordAuth" element={<DiscordAuth />} />;
-          <Route path="/adminPage/colony/:colonyName" element={<AdminPage />} />
-          ;
-          <Route path="/userPage" element={<UserPage />} />;
-          <Route path="/creatingPost" element={<CreatingPost />} />;
-          <Route
-            path="/editingPost/:notificationSubscriptionId/:version"
-            element={<EditingPost />}
-          />
-          ;
+
+
           <Route path="/loggedIn" element={<LoggedIn />} />;
+
+
           <Route
-            path="/manageServer/colony/:colonyName"
+            path="admin"
             element={<ManageServer />}
-          />
-          ;
-          <Route
-            path="/manageUsers/colony/:colonyName"
-            element={<ManageUsers />}
-          />
-          ;
-          <Route path="/creatingUser" element={<CreatingUser />} />;
-          <Route path="/editingUser/:userinfo" element={<EditingUser />} />
+          >
+            <Route path="discordServer/:discordServerName"  >
+              <Route index element={<AdminOptions />} />
+
+              <Route path="notificiationsSubscription"  >
+                <Route index path="list" element={<AdminPage />} />
+                <Route
+                  path="edit/:notificationSubscriptionId/:version"
+                  element={<EditingPost />}
+                />
+                <Route path="create" element={<CreatingPost />} />;
+
+
+              </Route>
+              <Route
+                path="users"
+              >
+                <Route
+                  path="list"
+                  element={<ManageUsers />}
+                ></Route>
+                <Route path="edit/:userinfo" element={<EditingUser />} />
+                <Route path="create" element={<CreatingUser />} />;
+              </Route>
+
+            </Route>
+          </Route>
+
+
+          <Route path="/user" element={<UserPage />} />;
+
+
+
         </Routes>
       </div>
     </AmplifyProvider>
   );
+
 }
 
 export default App;

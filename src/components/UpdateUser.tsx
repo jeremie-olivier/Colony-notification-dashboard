@@ -8,8 +8,8 @@ import { Link } from "react-router-dom";
 export const UpdateUser = (user: any) => {
   const [idDiscord, setIdDiscord] = useState(user.user.idDiscord || "");
   const [walletAddress, setWalletAddress] = useState(user.user.walletAddress || "");
-  const [userId, ] = useState(user.user.id || "")
-  const [version, ] = useState(user.user._version || "")
+  const [userId,] = useState(user.user.id || "")
+  const [version,] = useState(user.user._version || "")
 
   const handleUpdateUser = async () => {
     try {
@@ -53,9 +53,9 @@ export const UpdateUser = (user: any) => {
         />
       </div>
       <div className="flex justify-center bg-[#41AE9F] hover:bg-[#308176] rounded-md text-white font-bold p-2">
-      <Link to="/manageUsers">
-      <button onClick={handleUpdateUser}>Update User</button>
-      </Link>
+        <Link to="../list">
+          <button onClick={handleUpdateUser}>Update User</button>
+        </Link>
       </div>
     </div>
   );
