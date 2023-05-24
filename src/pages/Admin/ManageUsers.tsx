@@ -1,7 +1,4 @@
 import { Link, useParams } from "react-router-dom";
-
-import { ProfileBar } from "../../components/ProfileBar";
-
 import { useState, useEffect } from "react";
 import { getColonyName } from "../../api/getColonyName";
 import { Colony, ListUsersQuery } from "../../API";

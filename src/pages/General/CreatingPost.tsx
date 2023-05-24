@@ -1,6 +1,4 @@
 import { useState } from "react";
-
-import { ProfileBar } from "../../components/ProfileBar";
 import { DomainForm } from "../../components/DomainForm";
 import { DiscordChannelForm } from "../../components/DiscordChannelForm";
 import { MentionForm } from "../../components/MentionForm";
@@ -8,21 +6,20 @@ import { createNotificationSubscriptionInput } from "../../api/createNotificatio
 import { ColonyEventTypeForm } from "../../components/ColonyEventTypeForm";
 import { Link } from "react-router-dom";
 
-
 export const CreatingPost = () => {
   const [domainOption, setDomainOption] = useState("");
   const [discordChannelOption, setDiscordChannelOption] = useState("");
-  const [mentionOption, setMentionOption] = useState("");
+  const [mentionUserOptions, setMentionUserOptions] = useState<string[]>([]); 
+  const [mentionRoleOption, setMentionRoleOption] = useState<string[]>([]); 
   const [colonyEventTypeOption, setColonyEventTypeOption] = useState("");
 
-
   const handleSaveButtonClick = async () => {
-
     try {
       await createNotificationSubscriptionInput(
         domainOption,
         discordChannelOption,
-        mentionOption,
+        mentionUserOptions,
+        mentionRoleOption, 
         colonyEventTypeOption
       );
     } catch (error) {
@@ -48,8 +45,10 @@ export const CreatingPost = () => {
           </div>
           <div className="">
             <MentionForm
-              selectedOption={mentionOption}
-              setSelectedOption={setMentionOption}
+              selectedUserOptions={mentionUserOptions} 
+              setSelectedUserOptions={setMentionUserOptions} 
+              selectedRoleOptions={mentionRoleOption} 
+              setSelectedRoleOptions={setMentionRoleOption} 
             />
           </div>
           <ColonyEventTypeForm
@@ -64,7 +63,6 @@ export const CreatingPost = () => {
               Save
             </button>
           </Link>
-
         </div>
       </div>
     </section>
