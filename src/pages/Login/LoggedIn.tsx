@@ -49,9 +49,11 @@ export const LoggedIn = () => {
           <div className="border-solid border-2 border-slate-300 h-[200px] w-[350px] p-5 rounded-md">
             <div className="flex justify-center items-center mt-2 mb-4">
               <div className="w-12 h-12 bg-blue-300 rounded-full">
-                <p className="flex justify-center items-center font-bold text-white text-4xl">
+                <Link to="https://discord.com/api/oauth2/authorize?client_id=993467029317242891&permissions=8&scope=bot%20applications.commands">
+                <button className="flex justify-center items-center font-bold text-white text-4xl">
                   +
-                </p>
+                </button>
+                 </Link>
               </div>
             </div>
             <p className="text-3xl font-bold ">Add this bot into your server</p>
