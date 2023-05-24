@@ -73,6 +73,7 @@ export const MentionForm = ({
   
 
   return (
+    <div className="boder-solid border-2 border-gray-300 rounded-md"> Mention
     <div className="mx-4 mt-5">
       <label htmlFor="users">Select Users:</label>
       
@@ -93,6 +94,7 @@ export const MentionForm = ({
         onChange={onRoleChange}
       />
       
+    </div>
     </div>
   );
 };
