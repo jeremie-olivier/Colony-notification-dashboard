@@ -1,10 +1,11 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { DomainForm } from "../../components/DomainForm";
 import { DiscordChannelForm } from "../../components/DiscordChannelForm";
 import { MentionForm } from "../../components/MentionForm";
 import { createNotificationSubscriptionInput } from "../../api/createNotificationSubs";
 import { ColonyEventTypeForm } from "../../components/ColonyEventTypeForm";
 import { Link } from "react-router-dom";
+import { getDiscordServer } from "../../api/getDiscordServer";
 
 export const CreatingPost = () => {
   const [domainOption, setDomainOption] = useState("");
@@ -12,6 +13,20 @@ export const CreatingPost = () => {
   const [mentionUserOptions, setMentionUserOptions] = useState<string[]>([]); 
   const [mentionRoleOption, setMentionRoleOption] = useState<string[]>([]); 
   const [colonyEventTypeOption, setColonyEventTypeOption] = useState("");
+  const [discordServerOption, setDiscordServerOption] = useState("")
+
+  useEffect(() => {
+    const fetchDiscordServer = async () => {
+      try {
+        const discordServer = await getDiscordServer(discordServerOption);
+        setDiscordServerOption(discordServer.name);
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    };
+
+    fetchDiscordServer();
+  }, [discordServerOption]);
 
   const handleSaveButtonClick = async () => {
     try {
@@ -48,7 +63,8 @@ export const CreatingPost = () => {
               selectedUserOptions={mentionUserOptions} 
               setSelectedUserOptions={setMentionUserOptions} 
               selectedRoleOptions={mentionRoleOption} 
-              setSelectedRoleOptions={setMentionRoleOption} 
+              setSelectedRoleOptions={setMentionRoleOption}
+              discordServerName={discordServerOption}  
             />
           </div>
           <ColonyEventTypeForm

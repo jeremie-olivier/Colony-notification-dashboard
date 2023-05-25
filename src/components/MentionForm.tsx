@@ -1,7 +1,7 @@
 import {  useState, useEffect, Dispatch, SetStateAction } from "react";
-import { getUsersByGuildId } from "../api/getDiscordUsers";
-import { getRoleByGuildId } from "../api/getDiscordRoles";
 import Select, { OptionProps, components } from 'react-select'
+import { getDiscordServer } from "../api/getDiscordServer";
+import { useParams } from "react-router-dom";
 
 
 
@@ -11,28 +11,64 @@ interface MentionFormProps {
   setSelectedUserOptions: Dispatch<SetStateAction<string[]>>;
   selectedRoleOptions: string[]
   setSelectedRoleOptions: Dispatch<SetStateAction<string[]>>;
+  discordServerName: string;
 }
 
 export const MentionForm = ({
   selectedUserOptions,
   setSelectedUserOptions,
   selectedRoleOptions,
-  setSelectedRoleOptions
+  setSelectedRoleOptions,
 }: MentionFormProps) => {
+  const { discordServerName } = useParams();
   const [users, setUsers] = useState<{ name: string; avatar_url: string }[]>([]);
   const [roles, setRoles] = useState<{ role: string} []>([]);
 
+//créer fonction qui va transformer le name en id discord en contactant l'api amplify avec méthode graphql
+
   useEffect(() => {
-    const fetchDiscordUserandRoles = async () => {
-      const fetchedUsers = await getUsersByGuildId("1066783105752506440");
-      const fetchedRoles = await getRoleByGuildId("1066783105752506440");
-      const userNames = fetchedUsers
-      const roleNames = fetchedRoles
-      setUsers(userNames);
-      setRoles(roleNames);
+    const fetchDiscordUser = async () => {
+      try {
+        const discordServer = await getDiscordServer(discordServerName);
+        const users = await fetch(`http://localhost:9000/guild/${discordServer.idDiscord}/users`); // Remplacez "api/userRoles" par votre point de terminaison approprié
+        console.log(users);
+          if (users.ok) {
+          const data = await users.json();
+          const fetchedUsers = data.users;
+          const userNames = fetchedUsers.map((user: any) => user.name);
+          setUsers(userNames);
+        } else {
+          console.error('Error: ' + users.status);
+        }
+      } catch (error) {
+        console.error('Error:', error);
+      }
     };
-    fetchDiscordUserandRoles();
-  }, []);
+  
+    fetchDiscordUser();
+  }, [discordServerName]);
+
+  useEffect(() => {
+    const fetchDiscordRoles = async () => {
+      try {
+        const discordServer = await getDiscordServer(discordServerName);
+        const response = await fetch(`http://localhost:9000/guild/${discordServer.idDiscord}/roles`); // Remplacez "api/userRoles" par votre point de terminaison approprié
+        if (response.ok) {
+          const data = await response.json();
+          const fetchedRoles = data.roles;
+          const roleNames = fetchedRoles.map((role: any) => role.role);
+          setRoles(roleNames);
+        } else {
+          console.error('Error: ' + response.status);
+        }
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    };
+    
+    fetchDiscordRoles();
+    
+  }, [discordServerName]);
 
   const onUserChange = (selectedOptions: any) => {
     const userNames = selectedOptions.map((option: any) => option.value);
@@ -82,7 +118,7 @@ export const MentionForm = ({
         isMulti
       
         options={userOptions}
-        value={selectedUserOptions.map((user) => ({ value: user, label: user, avatarUrl: user }))}
+        value={users.map((user: any) => ({ value: user.idDiscord, label: user.name, avatarUrl: user.avatar }))}
         onChange={onUserChange}
       />
 
