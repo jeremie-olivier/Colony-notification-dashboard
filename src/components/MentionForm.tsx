@@ -1,4 +1,4 @@
-import {  useState, useEffect, Dispatch, SetStateAction } from "react";
+import { useState, useEffect, Dispatch, SetStateAction } from "react";
 import Select, { OptionProps, components } from 'react-select'
 import { getDiscordServer } from "../api/getDiscordServer";
 import { useParams } from "react-router-dom";
@@ -22,53 +22,34 @@ export const MentionForm = ({
 }: MentionFormProps) => {
   const { discordServerName } = useParams();
   const [users, setUsers] = useState<{ name: string; avatar_url: string }[]>([]);
-  const [roles, setRoles] = useState<{ role: string} []>([]);
+  const [roles, setRoles] = useState<{ role: string }[]>([]);
 
-//créer fonction qui va transformer le name en id discord en contactant l'api amplify avec méthode graphql
+  //créer fonction qui va transformer le name en id discord en contactant l'api amplify avec méthode graphql
 
   useEffect(() => {
     const fetchDiscordUser = async () => {
       try {
         const discordServer = await getDiscordServer(discordServerName);
-        const users = await fetch(`http://localhost:9000/guild/${discordServer.idDiscord}/users`); // Remplacez "api/userRoles" par votre point de terminaison approprié
-        console.log(users);
-          if (users.ok) {
-          const data = await users.json();
-          const fetchedUsers = data.users;
-          const userNames = fetchedUsers.map((user: any) => user.name);
-          setUsers(userNames);
-        } else {
-          console.error('Error: ' + users.status);
-        }
+
+
+        const usersResponse = await fetch(`http://localhost:9000/guild/${discordServer.idDiscord}/users`)
+        const users = await usersResponse.json()
+        setUsers(users)
+
+
+        const rolesResponse = await fetch(`http://localhost:9000/guild/${discordServer.idDiscord}/roles`); // Remplacez "api/userRoles" par votre point de terminaison approprié
+        const roles = await rolesResponse.json()
+        setRoles(roles)
+
       } catch (error) {
         console.error('Error:', error);
       }
     };
-  
+
     fetchDiscordUser();
   }, [discordServerName]);
 
-  useEffect(() => {
-    const fetchDiscordRoles = async () => {
-      try {
-        const discordServer = await getDiscordServer(discordServerName);
-        const response = await fetch(`http://localhost:9000/guild/${discordServer.idDiscord}/roles`); // Remplacez "api/userRoles" par votre point de terminaison approprié
-        if (response.ok) {
-          const data = await response.json();
-          const fetchedRoles = data.roles;
-          const roleNames = fetchedRoles.map((role: any) => role.role);
-          setRoles(roleNames);
-        } else {
-          console.error('Error: ' + response.status);
-        }
-      } catch (error) {
-        console.error('Error:', error);
-      }
-    };
-    
-    fetchDiscordRoles();
-    
-  }, [discordServerName]);
+
 
   const onUserChange = (selectedOptions: any) => {
     const userNames = selectedOptions.map((option: any) => option.value);
@@ -80,18 +61,8 @@ export const MentionForm = ({
     setSelectedRoleOptions(roleNames);
   };
 
-  const userOptions = users.map((user) => ({
-    value: user.name,
-    label: user.name,
-    avatarUrl: user.avatar_url
-
-   
-  }));
-
-  const roleOptions = roles.map((role) => ({
-    value: role.role,
-    label: role.role
-  }));
+  let userOptions;
+  let roleOptions
 
   const selectOptionWithAvatar = (props: OptionProps<{ value: string; label: string; avatarUrl: string }>) => {
     const { label, data } = props;
@@ -100,37 +71,37 @@ export const MentionForm = ({
     return (
       <components.Option {...props}>
         <div>
-          <img src={avatarUrl} alt="Avatar" />
-          {label}
+          <img src={avatarUrl} alt="Avatar" className="inline-block h-6 w-6 rounded-full " />
+          <span className="p-4">{label}</span>
         </div>
       </components.Option>
     );
   };
-  
 
+  if (!users) return <div>Loading</div>
   return (
     <div className="boder-solid border-2 border-gray-300 rounded-md"> Mention
-    <div className="mx-4 mt-5">
-      <label htmlFor="users">Select Users:</label>
-      
-        <Select
-        components={{ Option : selectOptionWithAvatar}}
-        isMulti
-      
-        options={userOptions}
-        value={users.map((user: any) => ({ value: user.idDiscord, label: user.name, avatarUrl: user.avatar }))}
-        onChange={onUserChange}
-      />
+      <div className="mx-4 mt-5">
+        <label htmlFor="users">Select Users:</label>
 
-<label htmlFor="roles">Select Roles:</label>
-      <Select
-        isMulti
-        options={roleOptions}
-        value={selectedRoleOptions.map((role) => ({ value: role, label: role }))}
-        onChange={onRoleChange}
-      />
-      
-    </div>
+        <Select
+          components={{ Option: selectOptionWithAvatar }}
+          isMulti
+
+          options={users.map((user: any) => ({ value: user.idDiscord, label: user.name, avatarUrl: user.avatar }))}
+          value={userOptions}
+          onChange={onUserChange}
+        />
+
+        <label htmlFor="roles">Select Roles:</label>
+        <Select
+          isMulti
+          value={roleOptions}
+          options={roles.map((role: any) => ({ value: role.idDiscord, label: role.name }))}
+          onChange={onRoleChange}
+        />
+
+      </div>
     </div>
   );
 };
