@@ -6,9 +6,15 @@ import { Link, useParams } from "react-router-dom";
 import { deleteNotificationSubscription as deleteNotification } from "../../graphql/mutations";
 import { ProfileBar } from "../../components/ProfileBar";
 import { API, graphqlOperation } from "aws-amplify";
+import { MentionRole } from "../../components/MentionRole";
+import { MentionUser } from "../../components/MentionAvatar";
+import { getDiscordServer } from "../../api/getDiscordServer";
 
 export const AdminPage = () => {
   const { discordServerName } = useParams();
+
+
+
   const [notificationSubscriptions, setNotificationSubscriptions] = useState<
     NotificationSubscription[]
   >([]);
@@ -17,8 +23,12 @@ export const AdminPage = () => {
 
   // TODO : Change request from ColonyName to Discord Server 
   let colonyName = discordServerName;
+  let discordServer: any
+
+
 
   useEffect(() => {
+
 
 
     async function fetchNotificationSubscriptions() {
@@ -156,7 +166,12 @@ export const AdminPage = () => {
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       {notificationSubscription.mentions?.items.map(
-                        (m) => `${m?.user?.idDiscord} `
+                        (m) => {
+                          console.log("mention", m)
+                          if (!m) return ""
+                          if (m.user) return <MentionUser key={m.id} discordServerid={discordServerName} userId={m.user.idDiscord} />
+                          return <MentionRole key={m.id} discordServerid={discordServerName} roleId={m.idDiscordRole} />
+                        }
                       )}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">

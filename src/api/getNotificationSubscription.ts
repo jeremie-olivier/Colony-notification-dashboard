@@ -34,6 +34,7 @@ export async function getNotificationSubscription(colonyName: string) {
               createdAt
               mentions {
                 items {
+                  idDiscordRole
                   user {
                     idDiscord
                   }
