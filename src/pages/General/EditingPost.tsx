@@ -6,6 +6,7 @@ import { updateNotificationSubscriptionInput } from "../../api/updateNotificatio
 import { ColonyForm } from "../../components/ColonyForm";
 import { Link, useLocation, useParams } from "react-router-dom";
 import { MentionForm } from "../../components/MentionForm";
+import { Mention, User } from "../../models";
 
 export const EditingPost = () => {
   const location = useLocation();
@@ -20,7 +21,7 @@ export const EditingPost = () => {
   const [colonyOption, setColonyOption] = useState("");
   const [discordServerOption, setDiscordServerOption] = useState("");
 
-  
+
   const handleUpdateButtonClick = async () => {
     try {
       await updateNotificationSubscriptionInput(
@@ -37,10 +38,12 @@ export const EditingPost = () => {
   };
 
 
-  const mentionsUserFilter = 
-    notificationSubscription.mentions.items.filter((m:any) => m.user != null )
+  const mentionsUserFilter =
+    notificationSubscription.mentions.items.filter((m: Mention) => m.user != null).map((m: Mention) => m.user)
 
-  
+  const mentionsRoleFilter = notificationSubscription.mentions.items.filter((m: Mention) => m.idDiscordRole)
+
+
 
   return (
     <section>
@@ -68,10 +71,10 @@ export const EditingPost = () => {
             <MentionForm
               selectedUserOptions={mentionsUserFilter}
               setSelectedUserOptions={setMentionUserOptions}
-              selectedRoleOptions={notificationSubscription}
+              selectedRoleOptions={mentionsRoleFilter}
               setSelectedRoleOptions={setMentionRoleOption}
               discordServerName={discordServerOption}
-              
+
             />
           </div>
           <div>
