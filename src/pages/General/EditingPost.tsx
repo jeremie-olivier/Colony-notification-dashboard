@@ -1,27 +1,30 @@
 import { useState } from "react";
-import { ProfileBar } from "../../components/ProfileBar";
 import { DomainForm } from "../../components/DomainForm";
 import { DiscordChannelForm } from "../../components/DiscordChannelForm";
 import { ColonyEventTypeForm } from "../../components/ColonyEventTypeForm";
 import { updateNotificationSubscriptionInput } from "../../api/updateNotificationSubs";
 import { ColonyForm } from "../../components/ColonyForm";
-import { Link, useParams } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
+import { MentionForm } from "../../components/MentionForm";
 
 export const EditingPost = () => {
-
-  const { notificationSubscriptionId } = useParams();
-  const { version } = useParams()
+  const location = useLocation();
+  const notificationSubscription = location.state.notificationSubscription;
+  //const { notificationSubscriptionId } = useParams();
+  const { version } = useParams();
   const [domainOption, setDomainOption] = useState("");
   const [discordChannelOption, setDiscordChannelOption] = useState("");
+  const [mentionUserOptions, setMentionUserOptions] = useState<string[]>([]);
+  const [mentionRoleOption, setMentionRoleOption] = useState<string[]>([]);
   const [colonyEventTypeOption, setColonyEventTypeOption] = useState("");
   const [colonyOption, setColonyOption] = useState("");
+  const [discordServerOption, setDiscordServerOption] = useState("");
 
-
-
+  
   const handleUpdateButtonClick = async () => {
     try {
       await updateNotificationSubscriptionInput(
-        notificationSubscriptionId,
+        notificationSubscription.id,
         domainOption,
         discordChannelOption,
         colonyEventTypeOption,
@@ -32,6 +35,12 @@ export const EditingPost = () => {
       console.error(error);
     }
   };
+
+
+  const mentionsUserFilter = 
+    notificationSubscription.mentions.items.filter((m:any) => m.user != null )
+
+  
 
   return (
     <section>
@@ -53,6 +62,16 @@ export const EditingPost = () => {
             <DiscordChannelForm
               selectedOption={discordChannelOption}
               setSelectedOption={setDiscordChannelOption}
+            />
+          </div>
+          <div className="">
+            <MentionForm
+              selectedUserOptions={mentionsUserFilter}
+              setSelectedUserOptions={setMentionUserOptions}
+              selectedRoleOptions={notificationSubscription}
+              setSelectedRoleOptions={setMentionRoleOption}
+              discordServerName={discordServerOption}
+              
             />
           </div>
           <div>

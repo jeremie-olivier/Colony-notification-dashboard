@@ -1,6 +1,7 @@
 import { API, graphqlOperation } from "aws-amplify";
 import { updateNotificationSubscription } from "../graphql/mutations";
 
+
 export async function updateNotificationSubscriptionInput(
   notificationSubscriptionId: any,
   domainOption: any,

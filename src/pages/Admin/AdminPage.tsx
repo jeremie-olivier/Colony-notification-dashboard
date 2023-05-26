@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { getNotificationSubscription } from "../../api/getNotificationSubscription";
 import { Colony, NotificationSubscription } from "../../API";
 import { getColonyName } from "../../api/getColonyName";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, Params } from "react-router-dom";
 import { deleteNotificationSubscription as deleteNotification } from "../../graphql/mutations";
 import { ProfileBar } from "../../components/ProfileBar";
 import { API, graphqlOperation } from "aws-amplify";
@@ -13,29 +13,23 @@ import { getDiscordServer } from "../../api/getDiscordServer";
 export const AdminPage = () => {
   const { discordServerName } = useParams();
 
-
-
   const [notificationSubscriptions, setNotificationSubscriptions] = useState<
     NotificationSubscription[]
   >([]);
   const [listcolonyNames, setListColonyNames] = useState<Colony[]>([]);
   const [notificationCount, setNotificationCount] = useState(0);
 
-  // TODO : Change request from ColonyName to Discord Server 
+  // TODO : Change request from ColonyName to Discord Server
   let colonyName = discordServerName;
-  let discordServer: any
-
-
+  let discordServer: any;
 
   useEffect(() => {
-
-
-
     async function fetchNotificationSubscriptions() {
       if (!colonyName) return;
       const response = await getNotificationSubscription(colonyName);
       const filteredSubscriptions = response.filter(
-        (notificationSubscription: { _deleted: null; }) => notificationSubscription._deleted === null
+        (notificationSubscription: { _deleted: null }) =>
+          notificationSubscription._deleted === null
       );
       setNotificationSubscriptions(filteredSubscriptions);
       setNotificationCount(filteredSubscriptions.length);
@@ -76,7 +70,6 @@ export const AdminPage = () => {
 
   return (
     <section>
-
       <div className="font-bold text-2xl mt-7 ml-7">
         {listcolonyNames.map((colony) => {
           if (colony.name === colonyName) {
@@ -85,8 +78,9 @@ export const AdminPage = () => {
                 <div>
                   {" "}
                   <p>
-
-                    <Link to={`/admin/discordServer/${colony.name}`}>{colony.name}</Link>
+                    <Link to={`/admin/discordServer/${colony.name}`}>
+                      {colony.name}
+                    </Link>
                     <span className="font-semibold">
                       / Discord manager settings
                     </span>
@@ -165,14 +159,25 @@ export const AdminPage = () => {
                       @{notificationSubscription.discordChannel?.name}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      {notificationSubscription.mentions?.items.map(
-                        (m) => {
-                          console.log("mention", m)
-                          if (!m) return ""
-                          if (m.user) return <MentionUser key={m.id} discordServerid={discordServerName} userId={m.user.idDiscord} />
-                          return <MentionRole key={m.id} discordServerid={discordServerName} roleId={m.idDiscordRole} />
-                        }
-                      )}
+                      {notificationSubscription.mentions?.items.map((m) => {
+                        console.log("mention", m);
+                        if (!m) return "";
+                        if (m.user)
+                          return (
+                            <MentionUser
+                              key={m.id}
+                              discordServerid={discordServerName}
+                              userId={m.user.idDiscord}
+                            />
+                          );
+                        return (
+                          <MentionRole
+                            key={m.id}
+                            discordServerid={discordServerName}
+                            roleId={m.idDiscordRole}
+                          />
+                        );
+                      })}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       {notificationSubscription.hits?.items.length}
@@ -180,6 +185,7 @@ export const AdminPage = () => {
                     <td className="px-6 py-4 whitespace-nowrap flex space-x-3">
                       <Link
                         to={`../edit/${notificationSubscription.id}/${notificationSubscription._version}`}
+                        state={{ notificationSubscription }}
                       >
                         <button className="rounded-md bg-[#5765F2] hover:bg-[#3B45A0] text-white p-2">
                           Edit

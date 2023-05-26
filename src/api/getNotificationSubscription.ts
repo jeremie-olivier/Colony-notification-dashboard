@@ -41,6 +41,7 @@ export async function getNotificationSubscription(colonyName: string) {
                   idDiscordRole
                   user {
                     idDiscord
+                    
                   }
                 }
               }

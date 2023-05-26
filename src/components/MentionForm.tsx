@@ -2,6 +2,7 @@ import { useState, useEffect, Dispatch, SetStateAction } from "react";
 import Select, { OptionProps, components } from 'react-select'
 import { getDiscordServer } from "../api/getDiscordServer";
 import { useParams } from "react-router-dom";
+import { DiscordServer } from "../models";
 
 
 
@@ -27,11 +28,11 @@ export const MentionForm = ({
   //créer fonction qui va transformer le name en id discord en contactant l'api amplify avec méthode graphql
 
   useEffect(() => {
-    const fetchDiscordUser = async () => {
+    const fetchDiscordUsers = async () => {
       try {
         const discordServer = await getDiscordServer(discordServerName);
 
-
+      
         const usersResponse = await fetch(`http://localhost:9000/guild/${discordServer.idDiscord}/users`)
         const users = await usersResponse.json()
         setUsers(users)
@@ -45,10 +46,22 @@ export const MentionForm = ({
         console.error('Error:', error);
       }
     };
+    
 
-    fetchDiscordUser();
+    fetchDiscordUsers();
   }, [discordServerName]);
 
+  useEffect(() => {
+    const fetchSelectedUsers = async (user:any) => {
+      const discordServer = await getDiscordServer(discordServerName);
+      const selectedUsers = await fetch(`http://localhost:9000/guild/${discordServer.idDiscord}/user/${user.idDiscord}`)
+      const userSelect = await selectedUsers.json()
+      return userSelect
+    }
+
+  
+
+  },[selectedUserOptions]);
 
 
   const onUserChange = (selectedOptions: any) => {
@@ -89,7 +102,8 @@ export const MentionForm = ({
           isMulti
 
           options={users.map((user: any) => ({ value: user.idDiscord, label: user.name, avatarUrl: user.avatar }))}
-          value={userOptions}
+          //@ts-ignore
+          value={selectedUserOptions}
           onChange={onUserChange}
         />
 
