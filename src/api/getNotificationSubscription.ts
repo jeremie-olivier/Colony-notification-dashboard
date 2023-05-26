@@ -3,9 +3,13 @@ import { GraphQLQuery } from "@aws-amplify/api";
 
 export async function getNotificationSubscription(colonyName: string) {
   const response = await API.graphql<GraphQLQuery<any>>({
-    query: `query($filter: ModelColonyFilterInput) {
-      listColonies(filter: $filter) {
+    query: `query Query($filter: ModelDiscordServerFilterInput) {
+      listDiscordServers(filter: $filter) {
         items {
+          colonies {
+            items {
+              colony {
+                name
           notificationSubscriptions {
             items {
               id
@@ -45,6 +49,10 @@ export async function getNotificationSubscription(colonyName: string) {
               }
             }
           }
+              }
+            }
+          }
+          id
         }
       }
     }`,
@@ -57,7 +65,6 @@ export async function getNotificationSubscription(colonyName: string) {
     },
   });
 
-  return response.data.listColonies.items[0]
-    ? response.data.listColonies.items[0].notificationSubscriptions.items
-    : [];
+  return response.data.listDiscordServers.items[0].colonies.items[0].colony
+    .notificationSubscriptions.items;
 }
