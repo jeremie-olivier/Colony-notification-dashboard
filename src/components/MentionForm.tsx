@@ -2,8 +2,8 @@ import { useState, useEffect, Dispatch, SetStateAction } from "react";
 import Select, { OptionProps, components } from 'react-select'
 import { getDiscordServer } from "../api/getDiscordServer";
 import { useParams } from "react-router-dom";
-import { DiscordServer, Mention } from "../models";
-import { debug } from "console";
+// import { DiscordServer, Mention } from "../models";
+// import { debug } from "console";
 
 
 
@@ -113,8 +113,8 @@ export const MentionForm = ({
     setPrefiledRolesOptions(selectedOptions)
   };
 
-  let userOptions;
-  let roleOptions
+  // let userOptions;
+  // let roleOptions
 
   const selectOptionWithAvatar = (props: OptionProps<{ value: string; label: string; avatarUrl: string }>) => {
     const { label, data } = props;
@@ -123,9 +123,9 @@ export const MentionForm = ({
 
     return (
       <components.Option {...props}>
-        <div>
+        <div className="">
           <img src={avatarUrl} alt="Avatar" className="inline-block h-6 w-6 rounded-full " />
-          <span className="p-4">{label}</span>
+          <span className="pl-2">{label}</span>
         </div>
       </components.Option>
     );
@@ -133,8 +133,8 @@ export const MentionForm = ({
 
   if (!users) return <div>Loading</div>
   return (
-    <div className="boder-solid border-2 border-gray-300 rounded-md"> Mention
-      <div className="mx-4 mt-5">
+
+      <div className="mt-2">
         <label htmlFor="users">Select Users:</label>
 
         <Select
@@ -156,6 +156,6 @@ export const MentionForm = ({
         />
 
       </div>
-    </div>
+  
   );
 };

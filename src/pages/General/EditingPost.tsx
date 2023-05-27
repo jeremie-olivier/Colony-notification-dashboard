@@ -6,7 +6,7 @@ import { updateNotificationSubscriptionInput } from "../../api/updateNotificatio
 import { ColonyForm } from "../../components/ColonyForm";
 import { Link, useLocation, useParams } from "react-router-dom";
 import { MentionForm } from "../../components/MentionForm";
-import { Mention, User } from "../../models";
+import { Mention } from "../../models";
 
 export const EditingPost = () => {
   const location = useLocation();
@@ -20,7 +20,6 @@ export const EditingPost = () => {
   const [colonyEventTypeOption, setColonyEventTypeOption] = useState("");
   const [colonyOption, setColonyOption] = useState("");
   const [discordServerOption, setDiscordServerOption] = useState("");
-
 
   const handleUpdateButtonClick = async () => {
     try {
@@ -37,46 +36,52 @@ export const EditingPost = () => {
     }
   };
 
+  const mentionsUserFilter = notificationSubscription.mentions.items
+    .filter((m: Mention) => m.user != null)
+    .map((m: Mention) => m.user);
 
-  const mentionsUserFilter =
-    notificationSubscription.mentions.items.filter((m: Mention) => m.user != null).map((m: Mention) => m.user)
-
-  const mentionsRoleFilter = notificationSubscription.mentions.items.filter((m: Mention) => m.idDiscordRole)
-
-
+  const mentionsRoleFilter = notificationSubscription.mentions.items.filter(
+    (m: Mention) => m.idDiscordRole
+  );
 
   return (
     <section>
       <div className="flex justify-center">
-        <div className="flex-col w-[800px]">
-          <div className="">
+        <div className="flex-col w-[800px] mt-10">
+          <p className="text-sm font-medium text-gray-900 ">Colony Name :</p>
+          <div className="mb-6">
             <ColonyForm
               selectedOption={colonyOption}
               setSelectedOption={setColonyOption}
             />
           </div>
-          <div className="">
+          <p className="text-sm font-medium text-gray-900 ">Teams :</p>
+          <div className="mb-6">
             <DomainForm
               selectedOption={domainOption}
               setSelectedOption={setDomainOption}
             />
           </div>
-          <div className="">
+          <p className="text-sm font-medium text-gray-900 ">
+            Discord Channel :
+          </p>
+          <div className="mb-6">
             <DiscordChannelForm
               selectedOption={discordChannelOption}
               setSelectedOption={setDiscordChannelOption}
             />
           </div>
-          <div className="">
+          <p className="text-sm font-medium text-gray-900 ">Mention :</p>
+          <div className="mb-6">
             <MentionForm
               selectedUserOptions={mentionsUserFilter}
               setSelectedUserOptions={setMentionUserOptions}
               selectedRoleOptions={mentionsRoleFilter}
               setSelectedRoleOptions={setMentionRoleOption}
               discordServerName={discordServerOption}
-
             />
           </div>
+          <p className="text-sm font-medium text-gray-900 ">Event Type :</p>
           <div>
             <ColonyEventTypeForm
               selectedOption={colonyEventTypeOption}

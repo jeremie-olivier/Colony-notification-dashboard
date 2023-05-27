@@ -1,6 +1,6 @@
 
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 import { getDiscordServer } from '../api/getDiscordServer';
 
 type User = {
@@ -37,7 +37,7 @@ export const MentionUser = (props: any) => {
     return (
         <div className='p-1'>
             <img src={user.avatar} alt="Avatar" className="inline-block h-6 w-6 rounded-full " />
-            <span className="p-4">{user.name}</span>
+            <span className="p-2">{user.name}</span>
         </div>
     )
 

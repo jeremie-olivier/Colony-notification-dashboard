@@ -2,7 +2,10 @@ import { useState, useEffect } from "react";
 import { DomainForm } from "../../components/DomainForm";
 import { DiscordChannelForm } from "../../components/DiscordChannelForm";
 import { MentionForm } from "../../components/MentionForm";
-import { CreateNotifSubInput, createNotificationSubscriptionInput } from "../../api/createNotificationSubs";
+import {
+  CreateNotifSubInput,
+  createNotificationSubscriptionInput,
+} from "../../api/createNotificationSubs";
 import { ColonyEventTypeForm } from "../../components/ColonyEventTypeForm";
 import { Link } from "react-router-dom";
 import { getDiscordServer } from "../../api/getDiscordServer";
@@ -13,7 +16,7 @@ export const CreatingPost = () => {
   const [mentionUserOptions, setMentionUserOptions] = useState<string[]>([]);
   const [mentionRoleOption, setMentionRoleOption] = useState<string[]>([]);
   const [colonyEventTypeOption, setColonyEventTypeOption] = useState("");
-  const [discordServerOption, setDiscordServerOption] = useState("")
+  const [discordServerOption, setDiscordServerOption] = useState("");
 
   useEffect(() => {
     const fetchDiscordServer = async () => {
@@ -21,7 +24,7 @@ export const CreatingPost = () => {
         const discordServer = await getDiscordServer(discordServerOption);
         setDiscordServerOption(discordServer.name);
       } catch (error) {
-        console.error('Error:', error);
+        console.error("Error:", error);
       }
     };
 
@@ -29,7 +32,6 @@ export const CreatingPost = () => {
   }, [discordServerOption]);
 
   const handleSaveButtonClick = async () => {
-
     let notifsSubs: CreateNotifSubInput = {
       // colonyId: "",
       // authorId: "",
@@ -37,13 +39,11 @@ export const CreatingPost = () => {
       discordChannelId: discordChannelOption,
       colonyEventTypeId: colonyEventTypeOption,
       userMentionIds: mentionUserOptions,
-      rolesMentionIds: mentionRoleOption
-    }
+      rolesMentionIds: mentionRoleOption,
+    };
 
     try {
-      await createNotificationSubscriptionInput(
-        notifsSubs
-      );
+      await createNotificationSubscriptionInput(notifsSubs);
     } catch (error) {
       console.error(error);
     }
@@ -52,22 +52,27 @@ export const CreatingPost = () => {
   return (
     <section>
       <div className="flex justify-center">
-        <div className="flex-col w-[800px]">
+        <div className="flex-col w-[800px] mt-10">
           {mentionRoleOption}
           {mentionUserOptions}
-          <div className="">
+          <p className="text-sm font-medium text-gray-900 ">Teams :</p>
+          <div className="mb-6">
             <DomainForm
               selectedOption={domainOption}
               setSelectedOption={setDomainOption}
             />
           </div>
-          <div className="">
+          <p className="text-sm font-medium text-gray-900 ">
+            Discord Channel :
+          </p>
+          <div className="mb-6">
             <DiscordChannelForm
               selectedOption={discordChannelOption}
               setSelectedOption={setDiscordChannelOption}
             />
           </div>
-          <div className="">
+          <p className="text-sm font-medium text-gray-900 ">Mention :</p>
+          <div className="mb-6">
             <MentionForm
               selectedUserOptions={mentionUserOptions}
               setSelectedUserOptions={setMentionUserOptions}
@@ -76,6 +81,7 @@ export const CreatingPost = () => {
               discordServerName={discordServerOption}
             />
           </div>
+          <p className="text-sm font-medium text-gray-900 ">Event Type :</p>
           <ColonyEventTypeForm
             selectedOption={colonyEventTypeOption}
             setSelectedOption={setColonyEventTypeOption}

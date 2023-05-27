@@ -32,10 +32,8 @@ export const ColonyForm = ({
   };
 
   return (
-    <div className="mx-4 mt-5">
-      <div className="mb-2">
-        <label htmlFor="select2">Colony's Name</label>
-      </div>
+    <div className="mt-2">
+
       <div className="form-group border-2 border-gray-400 rounded-md p-2">
         <select
           value={selectedOption}

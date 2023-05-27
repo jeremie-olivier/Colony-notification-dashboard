@@ -79,7 +79,7 @@ export const ManageUsers = () => {
         })}
       </div>
       <div className="m-6 relative overflow-x-auto shadow-md sm:rounded-lg">
-        <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+        <table className="w-full text-sm text-left text-black ">
           <thead className="text-xs text-gray-700 uppercase bg-indigo-300 dark:bg-gray-700 dark:text-gray-400">
             <tr>
               <th scope="col" className="px-6 py-3">
@@ -97,10 +97,11 @@ export const ManageUsers = () => {
             </tr>
           </thead>
           <tbody>
-            {userList.map((user: any) => {
+            {userList.map((user: any, index) => {
               if (user._deleted === null) {
+                 const rowClass = index % 2 === 0 ? 'bg-customColor1' : 'bg-customColor2';
                 return (
-                  <tr key={user.id}>
+                  <tr key={user.id} className={rowClass}>
                     <td className="px-6 py-4 whitespace-nowrap">
                       {user.idDiscord}
                     </td>

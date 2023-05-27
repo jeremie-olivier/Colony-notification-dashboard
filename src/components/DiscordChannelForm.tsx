@@ -24,10 +24,8 @@ export const DiscordChannelForm = ({ selectedOption, setSelectedOption }: Discor
   };
 
   return (
-    <div className="mx-4 mt-5">
-      <div className="mb-2">
-        <label htmlFor="select2">Discord Channel </label>
-      </div>
+    <div className="mt-2">
+
       <div className="form-group border-2 border-gray-400 rounded-md p-2">
         <select value={selectedOption} onChange={onChange} className="form-control">
           <option value="" defaultValue="true">

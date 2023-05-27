@@ -2,13 +2,13 @@ import { useState, useEffect } from "react";
 import { getNotificationSubscription } from "../../api/getNotificationSubscription";
 import { Colony, NotificationSubscription } from "../../API";
 import { getColonyName } from "../../api/getColonyName";
-import { Link, useParams, Params } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { deleteNotificationSubscription as deleteNotification } from "../../graphql/mutations";
-import { ProfileBar } from "../../components/ProfileBar";
+
 import { API, graphqlOperation } from "aws-amplify";
 import { MentionRole } from "../../components/MentionRole";
 import { MentionUser } from "../../components/MentionAvatar";
-import { getDiscordServer } from "../../api/getDiscordServer";
+
 
 export const AdminPage = () => {
   const { discordServerName } = useParams();
@@ -21,7 +21,7 @@ export const AdminPage = () => {
 
   // TODO : Change request from ColonyName to Discord Server
   let colonyName = discordServerName;
-  let discordServer: any;
+
 
   useEffect(() => {
     async function fetchNotificationSubscriptions() {
@@ -94,7 +94,7 @@ export const AdminPage = () => {
         })}
       </div>
       <div className="m-6 relative overflow-x-auto shadow-md sm:rounded-lg">
-        <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+        <table className="w-full text-sm text-left text-gray-500 dark:text-black">
           <thead className="text-xs text-gray-700 uppercase bg-indigo-300 dark:bg-gray-700 dark:text-gray-400">
             <tr>
               <th scope="col" className="px-6 py-3">
@@ -130,11 +130,14 @@ export const AdminPage = () => {
             </tr>
           </thead>
           <tbody>
-            {notificationSubscriptions.map((notificationSubscription) => {
+            {notificationSubscriptions.map((notificationSubscription, index) => {
               if (notificationSubscription._deleted === null) {
+                const rowClass = index % 2 === 0 ? 'bg-customColor1' : 'bg-customColor2';
+
+    
                 return (
-                  <tr key={notificationSubscription.id}>
-                    <td className="px-6 py-4 whitespace-nowrap">
+                  <tr key={notificationSubscription.id} className={`${rowClass} `}>
+                    <td className="px-6 py-4 whitespace-nowrap  ">
                       {notificationSubscription.colony?.name}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
@@ -182,7 +185,7 @@ export const AdminPage = () => {
                     <td className="px-6 py-4 whitespace-nowrap">
                       {notificationSubscription.hits?.items.length}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap flex space-x-3">
+                    <td className=" px-6 py-4 whitespace-nowrap  space-x-3 place-items-center ">
                       <Link
                         to={`../edit/${notificationSubscription.id}/${notificationSubscription._version}`}
                         state={{ notificationSubscription }}
